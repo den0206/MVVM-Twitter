@@ -129,7 +129,37 @@ class SignUpVC : UIViewController {
     //MARK: - Actions
     
     @objc func handleSignUp() {
-        print("SignUp")
+        guard let profileImage = self.profileImage else {
+            print("No exist Profile image")
+            return}
+        guard let email = emailTextField.text else {return}
+        guard let fullName = fullnameTextField.text else {return}
+        guard let userName = usernameTextField.text else {return}
+        guard let password = passwordTextField.text else {return}
+        
+        // init credential Model
+        let credentials = AuthCredentials(email: email, password: password, fullname: fullName, userName: userName, profileImage: profileImage)
+        
+        self.shouldPresentLoadingView(true)
+        
+        AuthService.shared.registerUser(credential: credentials) { (error) in
+            
+            
+            if error != nil {
+                self.shouldPresentLoadingView(false)
+                return
+            }
+            
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else {return }
+            guard let tab = window.rootViewController as? MainTabController else {return}
+            
+            tab.checkUserIsLogin()
+            
+            self.dismiss(animated: true, completion: {
+                self.shouldPresentLoadingView(false)
+            })
+        }
+        
     }
     
     @objc func tappedPlusButton() {
