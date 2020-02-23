@@ -43,10 +43,23 @@ class LoginVC : UIViewController {
         button.backgroundColor = .white
         button.setTitle("Log in", for: .normal)
         button.setTitleColor(.twitterBlue, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return button
     }()
+    
+    let dontHaveAccountButton: UIButton = {
+        let button = UIButton(type: .system)
+        let attributedTitle = NSMutableAttributedString(string: "Don't have an account?  ", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.white])
+        
+        attributedTitle.append(NSAttributedString(string: "Sign Up", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.white]))
+        
+        
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        button.addTarget(self, action: #selector(handleShowSignup), for: .touchUpInside)
+        return button
+    }()
+    
     
     
     
@@ -80,8 +93,17 @@ class LoginVC : UIViewController {
         view.addSubview(stack)
         stack.anchor(top :logoImageView.bottomAnchor, left : view.leftAnchor, right: view.rightAnchor, paddingTop: 40, paddingLeft: 16,paddingRight: 16)
         
-        
-        
+        view.addSubview(dontHaveAccountButton)
+        dontHaveAccountButton.centerX(inView: view)
+        dontHaveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, height: 12)
 
+    }
+    
+    //MARK: - Actions
+    
+    @objc func handleShowSignup() {
+        let signUpVC = SignUpVC()
+        
+        navigationController?.pushViewController(signUpVC, animated: true)
     }
 }

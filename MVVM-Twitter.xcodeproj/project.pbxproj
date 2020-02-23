@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -19,9 +19,14 @@
 		3A94B6C22401F64200B66957 /* ConversationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A94B6C12401F64200B66957 /* ConversationsController.swift */; };
 		3AAD840224021E7400C3ECE2 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAD840124021E7400C3ECE2 /* LoginVC.swift */; };
 		3AAD840424021EAE00C3ECE2 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAD840324021EAE00C3ECE2 /* SignUpVC.swift */; };
+		3AAD8406240236D000C3ECE2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3AAD8405240236D000C3ECE2 /* GoogleService-Info.plist */; };
+		7F573B10F2B27A042051CF64 /* Pods_MVVM_Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06F70B706193EBAE17A4E456 /* Pods_MVVM_Twitter.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		06F70B706193EBAE17A4E456 /* Pods_MVVM_Twitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MVVM_Twitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		08055F9739B4208537284D59 /* Pods-MVVM-Twitter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVM-Twitter.release.xcconfig"; path = "Target Support Files/Pods-MVVM-Twitter/Pods-MVVM-Twitter.release.xcconfig"; sourceTree = "<group>"; };
+		3237E7DD5B03F8C452222D87 /* Pods-MVVM-Twitter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVM-Twitter.debug.xcconfig"; path = "Target Support Files/Pods-MVVM-Twitter/Pods-MVVM-Twitter.debug.xcconfig"; sourceTree = "<group>"; };
 		3A459646240215F800F86A00 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		3A94B69C2401F39600B66957 /* MVVM-Twitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MVVM-Twitter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A94B69F2401F39600B66957 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +41,7 @@
 		3A94B6C12401F64200B66957 /* ConversationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsController.swift; sourceTree = "<group>"; };
 		3AAD840124021E7400C3ECE2 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		3AAD840324021EAE00C3ECE2 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		3AAD8405240236D000C3ECE2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,17 +49,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F573B10F2B27A042051CF64 /* Pods_MVVM_Twitter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0DE1DA7EDCD0AC461875AF48 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3237E7DD5B03F8C452222D87 /* Pods-MVVM-Twitter.debug.xcconfig */,
+				08055F9739B4208537284D59 /* Pods-MVVM-Twitter.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		3A94B6932401F39600B66957 = {
 			isa = PBXGroup;
 			children = (
 				3A94B69E2401F39600B66957 /* MVVM-Twitter */,
 				3A94B69D2401F39600B66957 /* Products */,
+				0DE1DA7EDCD0AC461875AF48 /* Pods */,
+				E74B513A6B81654E2B31F9D8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,6 +96,7 @@
 				3A94B6A82401F39800B66957 /* Assets.xcassets */,
 				3A94B6AA2401F39800B66957 /* LaunchScreen.storyboard */,
 				3A94B6AD2401F39800B66957 /* Info.plist */,
+				3AAD8405240236D000C3ECE2 /* GoogleService-Info.plist */,
 			);
 			path = "MVVM-Twitter";
 			sourceTree = "<group>";
@@ -133,6 +152,14 @@
 			path = Authentiocation;
 			sourceTree = "<group>";
 		};
+		E74B513A6B81654E2B31F9D8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				06F70B706193EBAE17A4E456 /* Pods_MVVM_Twitter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -140,9 +167,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3A94B6B02401F39800B66957 /* Build configuration list for PBXNativeTarget "MVVM-Twitter" */;
 			buildPhases = (
+				F8465C27362B927C5331D495 /* [CP] Check Pods Manifest.lock */,
 				3A94B6982401F39600B66957 /* Sources */,
 				3A94B6992401F39600B66957 /* Frameworks */,
 				3A94B69A2401F39600B66957 /* Resources */,
+				B54E309A9A059C23AA3097EC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -191,12 +220,55 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AAD8406240236D000C3ECE2 /* GoogleService-Info.plist in Resources */,
 				3A94B6AC2401F39800B66957 /* LaunchScreen.storyboard in Resources */,
 				3A94B6A92401F39800B66957 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B54E309A9A059C23AA3097EC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MVVM-Twitter/Pods-MVVM-Twitter-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MVVM-Twitter/Pods-MVVM-Twitter-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MVVM-Twitter/Pods-MVVM-Twitter-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F8465C27362B927C5331D495 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MVVM-Twitter-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3A94B6982401F39600B66957 /* Sources */ = {
@@ -346,6 +418,7 @@
 		};
 		3A94B6B12401F39800B66957 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3237E7DD5B03F8C452222D87 /* Pods-MVVM-Twitter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -364,6 +437,7 @@
 		};
 		3A94B6B22401F39800B66957 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08055F9739B4208537284D59 /* Pods-MVVM-Twitter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
