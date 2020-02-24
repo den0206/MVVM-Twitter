@@ -140,6 +140,8 @@ class SignUpVC : UIViewController {
         // init credential Model
         let credentials = AuthCredentials(email: email, password: password, fullname: fullName, userName: userName, profileImage: profileImage)
         
+        // Start Indicator
+        
         self.shouldPresentLoadingView(true)
         
         AuthService.shared.registerUser(credential: credentials) { (error) in

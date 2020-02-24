@@ -21,6 +21,14 @@ class AuthService {
     
     static let shared = AuthService()
     
+    //MARK: - Login User
+    
+    func loginUser(email :String, password : String, completion : AuthDataResultCallback?) {
+        
+        Auth.auth().signIn(withEmail: email, password: password, completion: completion)
+        
+    }
+    
     //MARK: - Register User
     
     func registerUser (credential : AuthCredentials, completion : @escaping(Error?) -> Void) {

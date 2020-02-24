@@ -45,6 +45,7 @@ class LoginVC : UIViewController {
         button.setTitleColor(.twitterBlue, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return button
     }()
     
@@ -100,6 +101,37 @@ class LoginVC : UIViewController {
     }
     
     //MARK: - Actions
+    
+    // Lopg in
+    
+    @objc func handleLogin() {
+        
+        guard let email = emailTextField.text else {return}
+        guard let password = passwordTextField.text else {return}
+        
+        shouldPresentLoadingView(true)
+        
+        AuthService.shared.loginUser(email: email, password: password) { (result, error) in
+            
+            if error != nil {
+                print(error?.localizedDescription)
+                self.shouldPresentLoadingView(false)
+                return
+            }
+            
+            // no Error
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else {return}
+            guard let tab = window.rootViewController as? MainTabController else {return}
+            
+            tab.checkUserIsLogin()
+            
+            self.dismiss(animated: true) {
+                self.shouldPresentLoadingView(false)
+            }
+            
+            
+        }
+    }
     
     @objc func handleShowSignup() {
         let signUpVC = SignUpVC()
