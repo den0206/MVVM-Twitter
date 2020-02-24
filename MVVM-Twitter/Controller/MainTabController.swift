@@ -13,6 +13,16 @@ class MainTabController: UITabBarController {
     
     //MARK: - Parts
     
+    var user : User? {
+        didSet {
+            guard let nav = viewControllers?[0] as? UINavigationController else {return}
+            guard let feed = nav.viewControllers.first as? FeedController else {return}
+            
+            feed.user = user
+            
+        }
+    }
+    
     let actionButton : UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .white
@@ -45,7 +55,7 @@ class MainTabController: UITabBarController {
     
     func configureViewController() {
         
-        let feedVC = FeedController()
+        let feedVC = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
         let nav1 = templateNavigationController(image: #imageLiteral(resourceName: "home_unselected"), rootViewController: feedVC)
     
         
@@ -66,7 +76,13 @@ class MainTabController: UITabBarController {
     //MARK: - Actions
       
       @objc func actionButtonTapped() {
-          print("tap@")
+        guard let user = self.user else {return}
+          
+        let controller = UploadTweetController(user: user)
+        
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
       }
       
     
@@ -92,7 +108,7 @@ class MainTabController: UITabBarController {
         guard let uid = Auth.auth().currentUser?.uid else {return}
         
         UserService.shared.fetchUser(uid: uid) { (user) in
-            print(user)
+            self.user = user
         }
         
         

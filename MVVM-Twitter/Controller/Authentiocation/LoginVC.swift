@@ -114,12 +114,14 @@ class LoginVC : UIViewController {
         AuthService.shared.loginUser(email: email, password: password) { (result, error) in
             
             if error != nil {
-                print(error?.localizedDescription)
+                print(error!.localizedDescription)
                 self.shouldPresentLoadingView(false)
                 return
             }
             
             // no Error
+            
+            // safe way
             guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else {return}
             guard let tab = window.rootViewController as? MainTabController else {return}
             
