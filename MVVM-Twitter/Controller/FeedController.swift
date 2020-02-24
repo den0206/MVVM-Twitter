@@ -21,6 +21,7 @@ class FeedController : UICollectionViewController {
         super.viewDidLoad()
         
         configureUI()
+        fetchTweets()
     }
     
     
@@ -48,6 +49,12 @@ class FeedController : UICollectionViewController {
         profileImageView.sd_setImage(with: user.profileImageUrl, completed: nil)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileImageView)
+    }
+    
+    func fetchTweets() {
+        TweetService.shared.fetchTweets { (tweets) in
+            
+        }
     }
     
 }
