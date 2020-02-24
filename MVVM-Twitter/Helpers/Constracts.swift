@@ -24,6 +24,14 @@ public let kPROFILE_IMAGE = "profileImage"
 public let kUSERNAME = "username"
 public let kFULLNAME = "fullname"
 
+//MARK: - Tweet
+
+public let kTIMESTAMP = "timestamp"
+public let kLIKES = "likes"
+public let kRETWEETS = "retweets"
+public let kCAPTION = "caption"
+public let kTWEETID = "tweetId"
+
 
 
 

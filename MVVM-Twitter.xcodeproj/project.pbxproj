@@ -27,6 +27,8 @@
 		3AC8F6222403638E00DD326D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC8F6212403638E00DD326D /* User.swift */; };
 		3ACA7F1C2403856700A81FF2 /* UploadTweetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACA7F1B2403856700A81FF2 /* UploadTweetController.swift */; };
 		3ACA7F1E240388C300A81FF2 /* inputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACA7F1D240388C300A81FF2 /* inputTextView.swift */; };
+		3AF79F2D24039A4B00C02332 /* TweetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF79F2C24039A4B00C02332 /* TweetService.swift */; };
+		3AF79F2F2403A37F00C02332 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF79F2E2403A37F00C02332 /* Tweet.swift */; };
 		7F573B10F2B27A042051CF64 /* Pods_MVVM_Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06F70B706193EBAE17A4E456 /* Pods_MVVM_Twitter.framework */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +58,8 @@
 		3AC8F6212403638E00DD326D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		3ACA7F1B2403856700A81FF2 /* UploadTweetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadTweetController.swift; sourceTree = "<group>"; };
 		3ACA7F1D240388C300A81FF2 /* inputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inputTextView.swift; sourceTree = "<group>"; };
+		3AF79F2C24039A4B00C02332 /* TweetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetService.swift; sourceTree = "<group>"; };
+		3AF79F2E2403A37F00C02332 /* Tweet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				3AC8F6212403638E00DD326D /* User.swift */,
+				3AF79F2E2403A37F00C02332 /* Tweet.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -150,6 +155,7 @@
 			children = (
 				3AAA4D9324028A48007DCFAB /* AuthService.swift */,
 				3AC8F61F240362EF00DD326D /* UserService.swift */,
+				3AF79F2C24039A4B00C02332 /* TweetService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -313,6 +319,8 @@
 				3AAD840424021EAE00C3ECE2 /* SignUpVC.swift in Sources */,
 				3AAA4D9424028A48007DCFAB /* AuthService.swift in Sources */,
 				3A94B6BB2401F5E600B66957 /* FeedController.swift in Sources */,
+				3AF79F2F2403A37F00C02332 /* Tweet.swift in Sources */,
+				3AF79F2D24039A4B00C02332 /* TweetService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
