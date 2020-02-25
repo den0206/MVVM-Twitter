@@ -9,11 +9,19 @@
 import UIKit
 import SDWebImage
 
+private let reuserIdentifier = "tweetCell"
+
 class FeedController : UICollectionViewController {
     
     var user : User? {
         didSet {
            configureLeftButton()
+        }
+    }
+    
+    private var tweets = [Tweet]() {
+        didSet {
+            collectionView.reloadData()
         }
     }
     
@@ -27,6 +35,8 @@ class FeedController : UICollectionViewController {
     
     func configureUI() {
         view.backgroundColor = .white
+        
+        collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuserIdentifier)
         
         collectionView.backgroundColor = .white
         
@@ -53,8 +63,42 @@ class FeedController : UICollectionViewController {
     
     func fetchTweets() {
         TweetService.shared.fetchTweets { (tweets) in
+            print(tweets.count)
+            self.tweets = tweets.sorted(by: { $0.timestamp >  $1.timestamp })
             
+//            self.collectionView.reloadData()
         }
     }
+    
+}
+
+//MARK: - UicollectionView Delegate
+
+
+extension FeedController {
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return tweets.count
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuserIdentifier, for: indexPath) as! TweetCell
+        
+        cell.tweet = tweets[indexPath.item]
+        
+        return cell
+    }
+    
+}
+
+//MARK: - UICollectionViewDelegateFlowLayout
+
+extension FeedController : UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: view.frame.width, height: 120)
+    }
+    
     
 }
