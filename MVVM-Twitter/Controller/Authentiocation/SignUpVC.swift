@@ -134,7 +134,7 @@ class SignUpVC : UIViewController {
             return}
         guard let email = emailTextField.text else {return}
         guard let fullName = fullnameTextField.text else {return}
-        guard let userName = usernameTextField.text else {return}
+        guard let userName = usernameTextField.text?.lowercased() else {return}
         guard let password = passwordTextField.text else {return}
         
         // init credential Model

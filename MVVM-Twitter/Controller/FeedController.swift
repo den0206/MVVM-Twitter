@@ -63,7 +63,7 @@ class FeedController : UICollectionViewController {
     
     func fetchTweets() {
         TweetService.shared.fetchTweets { (tweets) in
-            print(tweets.count)
+            
             self.tweets = tweets.sorted(by: { $0.timestamp >  $1.timestamp })
             
 //            self.collectionView.reloadData()
@@ -85,6 +85,7 @@ extension FeedController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuserIdentifier, for: indexPath) as! TweetCell
         
         cell.tweet = tweets[indexPath.item]
+        cell.delegate = self
         
         return cell
     }
@@ -98,6 +99,19 @@ extension FeedController : UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         return CGSize(width: view.frame.width, height: 120)
+    }
+    
+}
+
+//MARK: - Tweet Cell Delegate
+
+extension FeedController : TweetCellDelegate {
+    func handleProfileImageTapped(cell: TweetCell) {
+        
+        guard let user = cell.tweet?.user else {return}
+        
+        let profileVC = ProfileController()
+        navigationController?.pushViewController(profileVC, animated: true)
     }
     
     
