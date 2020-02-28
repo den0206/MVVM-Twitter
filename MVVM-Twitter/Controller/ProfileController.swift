@@ -14,7 +14,13 @@ private let headerIdentifier = "profileHeader"
 
 class ProfileController : UICollectionViewController {
     
-    init() {
+    private var user : User
+    
+    private var tweets = [Tweet]()
+    
+    
+    init(user : User) {
+        self.user = user
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
     }
     
@@ -26,10 +32,12 @@ class ProfileController : UICollectionViewController {
         super.viewDidLoad()
         
         configureCollectionView()
+        fetchTweets()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.isHidden = true
 
     }
@@ -44,6 +52,16 @@ class ProfileController : UICollectionViewController {
         collectionView.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerIdentifier)
     }
     
+    //MARK: - FireStore
+    
+    private func fetchTweets() {
+        TweetService.shared.fetchTweetsForUser(user: user) { (tweets) in
+            
+            self.tweets = tweets.sorted(by: { $0.timestamp >  $1.timestamp })
+            self.collectionView.reloadData()
+        }
+    }
+    
 }
 
 //MARK: - Collectionview Delegate
@@ -53,12 +71,14 @@ extension ProfileController {
     // data Source
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return tweets.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuserIdentifier, for: indexPath) as! TweetCell
+        
+        cell.tweet = tweets[indexPath.item]
         
         return cell
     }
@@ -69,6 +89,7 @@ extension ProfileController {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerIdentifier, for: indexPath) as! ProfileHeader
         
         header.delegate = self
+        header.user = user
         return header
     }
 }

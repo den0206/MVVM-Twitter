@@ -16,6 +16,12 @@ class ProfileHeader  : UICollectionReusableView {
     
     var delegate : ProfileHeaderDelegate?
     
+    var user : User? {
+        didSet {
+            configure()
+        }
+    }
+    
     //MARK: - Parts
     
     private lazy var containerView : UIView = {
@@ -37,7 +43,7 @@ class ProfileHeader  : UICollectionReusableView {
     
     private let profileImageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
+//        iv.contentMode = .scaleAspectFit
         iv.clipsToBounds = true
         iv.backgroundColor = .lightGray
         iv.layer.borderColor = UIColor.white.cgColor
@@ -58,7 +64,6 @@ class ProfileHeader  : UICollectionReusableView {
     private let fullnameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.text = "User"
         return label
     }()
     
@@ -66,7 +71,6 @@ class ProfileHeader  : UICollectionReusableView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .lightGray
-        label.text = "User"
 
         return label
     }()
@@ -89,15 +93,11 @@ class ProfileHeader  : UICollectionReusableView {
     private let followingLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "User"
-
-        
         return label
     }()
     
     private let followersLabel: UILabel = {
         let label = UILabel()
-        label.text = "User"
 
         
         return label
@@ -154,6 +154,24 @@ class ProfileHeader  : UICollectionReusableView {
     
     @objc func handleDismiss() {
         delegate?.handleDismiss()
+    }
+    
+    private func configure() {
+        guard let user = user else {return}
+        let viewModel = ProfileHeaderViewModel(user: user)
+        
+        print(viewModel)
+        
+        profileImageView.sd_setImage(with: user.profileImageUrl, completed: nil)
+        followersLabel.attributedText = viewModel.followersString
+        followingLabel.attributedText = viewModel.followeingString
+        
+        editProfileFollowButton.setTitle(viewModel.actuionButtonTitle, for: .normal)
+        
+        fullnameLabel.text = user.fullname
+        usernameLabel.text = viewModel.usernameText
+        
+        
     }
     
 }

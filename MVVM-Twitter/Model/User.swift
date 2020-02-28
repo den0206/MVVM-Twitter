@@ -18,6 +18,8 @@ struct User {
     var profileImageUrl : URL?
     let uid : String
     
+    var isCurrentUser : Bool {return Auth.auth().currentUser?.uid == uid}
+    
     
     init(uid : String, dictionary : [String : Any]) {
         self.uid = uid

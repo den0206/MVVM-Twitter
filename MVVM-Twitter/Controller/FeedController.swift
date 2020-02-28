@@ -32,6 +32,12 @@ class FeedController : UICollectionViewController {
         fetchTweets()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.isHidden = false
+    }
     
     func configureUI() {
         view.backgroundColor = .white
@@ -110,7 +116,7 @@ extension FeedController : TweetCellDelegate {
         
         guard let user = cell.tweet?.user else {return}
         
-        let profileVC = ProfileController()
+        let profileVC = ProfileController(user: user)
         navigationController?.pushViewController(profileVC, animated: true)
     }
     
