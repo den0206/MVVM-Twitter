@@ -146,7 +146,7 @@ extension UITextField {
 extension UIImageView{
     func profilImageView() -> UIImageView{
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
+//        iv.contentMode = .scaleAspectFit
         iv.clipsToBounds = true
         iv.setDimensions(width: 40, height: 40)
         iv.layer.cornerRadius = 40 / 2

@@ -55,6 +55,9 @@ class UserCell: UITableViewCell {
     
     func configure() {
         guard let user = user else {return}
-        print(user.fullname)
+        
+        profileImageView.sd_setImage(with: user.profileImageUrl, completed: nil)
+        usernameLabel.text = user.username
+        fullnamelabel.text = user.fullname
     }
 }

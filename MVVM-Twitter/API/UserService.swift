@@ -45,6 +45,20 @@ class UserService {
             }
         }
     }
+    
+    func fetchUserIsFollowed(uid : String, completion : @escaping(Bool) -> Void) {
+        guard let currentId = Auth.auth().currentUser?.uid else {return}
+        
+
+        userFollowingReference(userId: currentId).document(uid).addSnapshotListener { (snapshot, error) in
+            guard let snapshot = snapshot else {return}
+            
+            completion(snapshot.exists)
+        }
+        
+    }
+    
+   
 
     
 }

@@ -42,10 +42,16 @@ struct ProfileHeaderViewModel {
         if user.isCurrentUser {
             return "Edit Profile"
         }
-        else {
-            
-            return "Following"
+        
+        if !user.isFollowed {
+            return "Follow"
         }
+        
+        if user.isFollowed {
+            return "UnFollow"
+        }
+        
+        return "Loading"
     }
     
     

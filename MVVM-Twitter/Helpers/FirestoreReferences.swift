@@ -12,10 +12,20 @@ import FirebaseFirestore
 enum References : String {
     case User
     case Tweet
+    case Following
+    case Follower
 }
 
 func firebaseReferences(_ reference : References) -> CollectionReference {
     return Firestore.firestore().collection(reference.rawValue)
+}
+
+func userFollowingReference(userId : String) -> CollectionReference {
+    return firebaseReferences(.User).document(userId).collection(kFOLLOWING)
+}
+
+func userFollowesReference(userId : String) -> CollectionReference {
+    return firebaseReferences(.User).document(userId).collection(kFOLLOWERS)
 }
 
 

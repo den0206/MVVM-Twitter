@@ -17,6 +17,8 @@ struct User {
     var username : String
     var profileImageUrl : URL?
     let uid : String
+    var isFollowed = false
+    var stats : UserRelationStats?
     
     var isCurrentUser : Bool {return Auth.auth().currentUser?.uid == uid}
     
@@ -33,4 +35,26 @@ struct User {
             self.profileImageUrl = url
         }
     }
+    
+    func follow() {
+        let date = Int(NSDate().timeIntervalSince1970)
+        guard let currentID = Auth.auth().currentUser?.uid else {return}
+        
+        userFollowingReference(userId: currentID).document(self.uid).setData([kTIMESTAMP : date])
+        userFollowesReference(userId: self.uid).document(currentID).setData([kTIMESTAMP : date])
+        
+    }
+    
+    func unFollow() {
+        guard let currentID = Auth.auth().currentUser?.uid else {return}
+        
+        userFollowingReference(userId: currentID).document(self.uid).delete()
+        userFollowesReference(userId: self.uid).document(currentID).delete()
+        
+    }
+}
+
+struct UserRelationStats {
+    var followers : Int
+    var following : Int
 }
