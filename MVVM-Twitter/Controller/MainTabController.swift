@@ -59,7 +59,7 @@ class MainTabController: UITabBarController {
         let nav1 = templateNavigationController(image: #imageLiteral(resourceName: "home_unselected"), rootViewController: feedVC)
     
         
-        let exploreVC = SearchController()
+        let exploreVC = SearchController(config: .searchUser)
         let nav2 = templateNavigationController(image: UIImage(named: "search_unselected"), rootViewController: exploreVC)
 
         let notificationVC = NotificationController()

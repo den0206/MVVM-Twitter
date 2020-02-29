@@ -10,7 +10,16 @@ import UIKit
 
 private let reuserIdentifer = "userCell"
 
+enum SearchControllerCongiguration {
+    case message
+    case searchUser
+    case following
+    case follower
+}
+
 class SearchController : UITableViewController {
+    
+    private let config : SearchControllerCongiguration
     
     private var users = [User]() {
         didSet {
@@ -29,7 +38,8 @@ class SearchController : UITableViewController {
         return searchController.isActive && !searchController.searchBar.text!.isEmpty
     }
     
-    init() {
+    init(config : SearchControllerCongiguration) {
+        self.config = config
         super.init(style: .plain)
     }
     
@@ -49,6 +59,7 @@ class SearchController : UITableViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.isHidden = false
+        
     }
     
     

@@ -58,6 +58,25 @@ class UserService {
         
     }
     
+    func fetchStats(userId : String, completion : @escaping(UserRelationStats?) -> Void) {
+        firebaseReferences(.User).document(userId).addSnapshotListener{ (snapshot, error) in
+            guard let snapshot = snapshot else {return}
+            
+            if snapshot.exists {
+                let dictionary = snapshot.data()!
+                
+                let following = dictionary[kFOLLOWING] as? Int ?? 0
+                let follwers = dictionary[kFOLLOWERS] as? Int ?? 0
+                
+                let stats = UserRelationStats(followers: follwers, following: following)
+                completion(stats)
+            
+            } else {
+                completion(nil)
+            }
+        }
+    }
+    
    
 
     

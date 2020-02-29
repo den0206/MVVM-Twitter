@@ -43,6 +43,13 @@ struct User {
         userFollowingReference(userId: currentID).document(self.uid).setData([kTIMESTAMP : date])
         userFollowesReference(userId: self.uid).document(currentID).setData([kTIMESTAMP : date])
         
+        // Count Increment
+        
+        firebaseReferences(.User).document(currentID).updateData([ kFOLLOWING: FieldValue.increment((Int64(1)))])
+        
+        firebaseReferences(.User).document(self.uid).updateData([ kFOLLOWERS: FieldValue.increment((Int64(1)))])
+        
+        
     }
     
     func unFollow() {
@@ -50,6 +57,14 @@ struct User {
         
         userFollowingReference(userId: currentID).document(self.uid).delete()
         userFollowesReference(userId: self.uid).document(currentID).delete()
+        
+        // Count Decrement
+
+        
+        firebaseReferences(.User).document(currentID).updateData([ kFOLLOWING: FieldValue.increment((Int64(-1)))])
+               
+               firebaseReferences(.User).document(self.uid).updateData([ kFOLLOWERS: FieldValue.increment((Int64(-1)))])
+               
         
     }
 }
