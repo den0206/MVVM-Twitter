@@ -10,13 +10,13 @@
 		3A021A572408008C00B7E14D /* ProfileFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A021A562408008C00B7E14D /* ProfileFilterView.swift */; };
 		3A31EC80240935CF006797FA /* ProfileHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A31EC7F240935CE006797FA /* ProfileHeaderViewModel.swift */; };
 		3A459647240215F800F86A00 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A459646240215F800F86A00 /* Extensions.swift */; };
+		3A687B43240A04BD00617489 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A687B42240A04BD00617489 /* SearchController.swift */; };
 		3A94B6A02401F39600B66957 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A94B69F2401F39600B66957 /* AppDelegate.swift */; };
 		3A94B6A22401F39600B66957 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A94B6A12401F39600B66957 /* SceneDelegate.swift */; };
 		3A94B6A92401F39800B66957 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A94B6A82401F39800B66957 /* Assets.xcassets */; };
 		3A94B6AC2401F39800B66957 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A94B6AA2401F39800B66957 /* LaunchScreen.storyboard */; };
 		3A94B6B92401F49900B66957 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A94B6B82401F49900B66957 /* MainTabController.swift */; };
 		3A94B6BB2401F5E600B66957 /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A94B6BA2401F5E600B66957 /* FeedController.swift */; };
-		3A94B6BD2401F61500B66957 /* ExploreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A94B6BC2401F61500B66957 /* ExploreController.swift */; };
 		3A94B6C02401F62A00B66957 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A94B6BF2401F62A00B66957 /* NotificationController.swift */; };
 		3A94B6C22401F64200B66957 /* ConversationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A94B6C12401F64200B66957 /* ConversationsController.swift */; };
 		3AAA4D9424028A48007DCFAB /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA4D9324028A48007DCFAB /* AuthService.swift */; };
@@ -25,6 +25,7 @@
 		3AAD840224021E7400C3ECE2 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAD840124021E7400C3ECE2 /* LoginVC.swift */; };
 		3AAD840424021EAE00C3ECE2 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAD840324021EAE00C3ECE2 /* SignUpVC.swift */; };
 		3AAD8406240236D000C3ECE2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3AAD8405240236D000C3ECE2 /* GoogleService-Info.plist */; };
+		3ABB3A242409FF6D0090FF45 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ABB3A232409FF6D0090FF45 /* UserCell.swift */; };
 		3AC4124C24069B2500B3FA4E /* TweetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC4124B24069B2500B3FA4E /* TweetViewModel.swift */; };
 		3AC4124E2406A4D700B3FA4E /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC4124D2406A4D700B3FA4E /* ProfileController.swift */; };
 		3AC412502406AA1D00B3FA4E /* ProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC4124F2406AA1D00B3FA4E /* ProfileHeader.swift */; };
@@ -46,6 +47,7 @@
 		3A021A562408008C00B7E14D /* ProfileFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFilterView.swift; sourceTree = "<group>"; };
 		3A31EC7F240935CE006797FA /* ProfileHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderViewModel.swift; sourceTree = "<group>"; };
 		3A459646240215F800F86A00 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		3A687B42240A04BD00617489 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		3A94B69C2401F39600B66957 /* MVVM-Twitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MVVM-Twitter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A94B69F2401F39600B66957 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A94B6A12401F39600B66957 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -54,7 +56,6 @@
 		3A94B6AD2401F39800B66957 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A94B6B82401F49900B66957 /* MainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		3A94B6BA2401F5E600B66957 /* FeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedController.swift; sourceTree = "<group>"; };
-		3A94B6BC2401F61500B66957 /* ExploreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreController.swift; sourceTree = "<group>"; };
 		3A94B6BF2401F62A00B66957 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		3A94B6C12401F64200B66957 /* ConversationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsController.swift; sourceTree = "<group>"; };
 		3AAA4D9324028A48007DCFAB /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -63,6 +64,7 @@
 		3AAD840124021E7400C3ECE2 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		3AAD840324021EAE00C3ECE2 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		3AAD8405240236D000C3ECE2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3ABB3A232409FF6D0090FF45 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		3AC4124B24069B2500B3FA4E /* TweetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetViewModel.swift; sourceTree = "<group>"; };
 		3AC4124D2406A4D700B3FA4E /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		3AC4124F2406AA1D00B3FA4E /* ProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeader.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				3AC412512406AFCD00B3FA4E /* Profile */,
 				3ACA7F1D240388C300A81FF2 /* inputTextView.swift */,
 				3ACA110B2405522200A7756D /* TweetCell.swift */,
+				3ABB3A232409FF6D0090FF45 /* UserCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -159,7 +162,7 @@
 				3AAD840024021E5F00C3ECE2 /* Authentiocation */,
 				3A94B6B82401F49900B66957 /* MainTabController.swift */,
 				3A94B6BA2401F5E600B66957 /* FeedController.swift */,
-				3A94B6BC2401F61500B66957 /* ExploreController.swift */,
+				3A687B42240A04BD00617489 /* SearchController.swift */,
 				3A94B6BF2401F62A00B66957 /* NotificationController.swift */,
 				3A94B6C12401F64200B66957 /* ConversationsController.swift */,
 				3ACA7F1B2403856700A81FF2 /* UploadTweetController.swift */,
@@ -344,9 +347,10 @@
 				3A94B6C22401F64200B66957 /* ConversationsController.swift in Sources */,
 				3AC7C44D240802D7003363DC /* ProfileFilterCell.swift in Sources */,
 				3AAA4D9824028C19007DCFAB /* FirestoreReferences.swift in Sources */,
+				3ABB3A242409FF6D0090FF45 /* UserCell.swift in Sources */,
 				3A459647240215F800F86A00 /* Extensions.swift in Sources */,
+				3A687B43240A04BD00617489 /* SearchController.swift in Sources */,
 				3A94B6A02401F39600B66957 /* AppDelegate.swift in Sources */,
-				3A94B6BD2401F61500B66957 /* ExploreController.swift in Sources */,
 				3A021A572408008C00B7E14D /* ProfileFilterView.swift in Sources */,
 				3AC4124E2406A4D700B3FA4E /* ProfileController.swift in Sources */,
 				3AC412502406AA1D00B3FA4E /* ProfileHeader.swift in Sources */,

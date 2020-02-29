@@ -25,6 +25,26 @@ class UserService {
         }
         
     }
+    
+    func fetchUsers(completion : @escaping([User]) -> Void) {
+        
+        var users = [User]()
+        
+        firebaseReferences(.User).getDocuments { (snapshot, error) in
+            guard let snapshot = snapshot else {return}
+            
+            if !snapshot.isEmpty {
+                for document in snapshot.documents {
+                    let dictionary = document.data()
+                    let user = User(uid: document.documentID, dictionary: dictionary)
+                    
+                    users.append(user)
+                    
+                }
+                completion(users)
+            }
+        }
+    }
 
     
 }
