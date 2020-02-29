@@ -8,14 +8,16 @@
 
 import UIKit
 
-protocol ProfileHeaderDelegate {
+protocol ProfileHeaderDelegate : class{
     func handleDismiss()
     func handleEditProfileFollow(_ header : ProfileHeader)
+    func handleFollowingLabelTapped()
+    func handleFollowerLabelTapped()
 }
 
 class ProfileHeader  : UICollectionReusableView {
     
-    var delegate : ProfileHeaderDelegate?
+    weak var delegate : ProfileHeaderDelegate?
     
     var user : User? {
         didSet {
@@ -91,15 +93,29 @@ class ProfileHeader  : UICollectionReusableView {
         return view
     }()
     
-    private let followingLabel: UILabel = {
+    private lazy var followingLabel: UILabel = {
         let label = UILabel()
         
+        let tap = UITapGestureRecognizer()
+        tap.addTarget(self, action: #selector(handleFollowingLabelTapped))
+        
+//        tap.cancelsTouchesInView = false
+        
+        label.addGestureRecognizer(tap)
+        label.isUserInteractionEnabled = true
+
         return label
     }()
     
-    private let followersLabel: UILabel = {
+    private lazy var followersLabel: UILabel = {
         let label = UILabel()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleFollowerLabelTapped))
+        
+//        tap.cancelsTouchesInView = false
 
+        label.addGestureRecognizer(tap)
+        label.isUserInteractionEnabled = true
         
         return label
     }()
@@ -132,9 +148,11 @@ class ProfileHeader  : UICollectionReusableView {
         userDetailStack.anchor(top : profileImageView.bottomAnchor, left:  leftAnchor,right: rightAnchor, paddingTop: 8, paddingLeft : 12 ,paddingRight: 12)
         
         let followStack = UIStackView(arrangedSubviews: [followingLabel, followersLabel])
+        
         followStack.axis = .horizontal
         followStack.distribution = .fillEqually
         followStack.spacing = 8
+        
         
         addSubview(followStack)
         followStack.anchor(top : userDetailStack.bottomAnchor, left:  leftAnchor,paddingTop: 8, paddingLeft: 12)
@@ -158,17 +176,29 @@ class ProfileHeader  : UICollectionReusableView {
     }
     
     @objc func handleEditProfileFollow() {
+        
         delegate?.handleEditProfileFollow(self)
+    }
+    
+    @objc func handleFollowingLabelTapped() {
+        
+        delegate?.handleFollowingLabelTapped()
+        
+    }
+    
+    @objc func handleFollowerLabelTapped() {
+        
+        delegate?.handleFollowerLabelTapped()
     }
     
     private func configure() {
         guard let user = user else {return}
         let viewModel = ProfileHeaderViewModel(user: user)
-        
-        print(viewModel)
+    
         
         profileImageView.sd_setImage(with: user.profileImageUrl, completed: nil)
         followersLabel.attributedText = viewModel.followersString
+        
         followingLabel.attributedText = viewModel.followeingString
         
         editProfileFollowButton.setTitle(viewModel.actuionButtonTitle, for: .normal)

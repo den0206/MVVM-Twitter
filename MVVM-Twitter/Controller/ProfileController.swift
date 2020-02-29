@@ -19,6 +19,7 @@ class ProfileController : UICollectionViewController {
     private var tweets = [Tweet]()
     
     
+    
     init(user : User) {
         self.user = user
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
@@ -134,7 +135,7 @@ extension ProfileController : UICollectionViewDelegateFlowLayout {
 //MARK: - Profile Header Delegate
 
 extension ProfileController : ProfileHeaderDelegate {
-   
+ 
     
     func handleDismiss() {
         navigationController?.popViewController(animated: true)
@@ -154,6 +155,15 @@ extension ProfileController : ProfileHeaderDelegate {
             user.follow()
         }
     }
+    
+    func handleFollowingLabelTapped() {
+         print("Following")
+     }
+     
+     func handleFollowerLabelTapped() {
+         print("Follower")
+     }
+     
     
     
 }
