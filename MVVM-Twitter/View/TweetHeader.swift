@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol TweetHeaderDelegate : class {
+    
+    func handleOptionButtonPressed()
+}
+
 class TweetHeader : UICollectionReusableView {
     
     var tweet : Tweet? {
@@ -15,6 +20,8 @@ class TweetHeader : UICollectionReusableView {
             configure()
         }
     }
+    
+    weak var delegate : TweetHeaderDelegate?
     
     //MARK: - Parts
     
@@ -195,7 +202,7 @@ class TweetHeader : UICollectionReusableView {
     }
     
     @objc func showActionSheet() {
-        
+        delegate?.handleOptionButtonPressed()
     }
     
     
@@ -210,6 +217,10 @@ class TweetHeader : UICollectionReusableView {
         usernameLabel.text =  viewModel.usernameText
         profileImageView.sd_setImage(with: viewModel.profileImageUrl, completed: nil)
         dateLabel.text = viewModel.headerTimeStamp
+        
+        retweetsLabel.attributedText = viewModel.retweetAttributedString
+        likesLabel.attributedText = viewModel.likesAttributedString
+        
         
         
         

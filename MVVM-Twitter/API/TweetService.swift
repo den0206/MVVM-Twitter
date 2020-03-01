@@ -115,5 +115,41 @@ class TweetService {
         }
     }
     
+    func fetchReply(tweetId : String, completion : @escaping([Tweet]) -> Void) {
+        
+        var replies = [Tweet]()
+        
+        tweetReplyRreference(tweetId: tweetId).getDocuments { (snapshot, error) in
+            guard let snapshot = snapshot else {return}
+            
+            if !snapshot.isEmpty {
+                for document in snapshot.documents {
+                    let dictionary = document.data()
+                    
+                    self.fetchTweetOfUser(userId: dictionary[kUSERID] as! String) { (user) in
+                        let reply = Tweet(user: user, tweetId: tweetId, dictionary: dictionary)
+                        replies.append(reply)
+                        
+                        completion(replies)
+                    }
+                }
+            }
+        }
+    }
+    
+    //MARK: - Helper
+    
+    func fetchTweetOfUser(userId : String, completion : @escaping(User) -> Void) {
+        
+        firebaseReferences(.User).document(userId).getDocument { (snapshot, error) in
+            guard let snapshot = snapshot else {return}
+            if snapshot.exists {
+                let dictionary = snapshot.data() as! [String : Any]
+                let user = User(uid: snapshot.documentID, dictionary: dictionary)
+                completion(user)
+            }
+        }
+    }
+    
     
 }

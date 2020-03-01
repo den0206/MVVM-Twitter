@@ -14,9 +14,17 @@ private let reuserIdentifer = "TweetCell"
 class TweetController : UICollectionViewController {
     
     private let  tweet : Tweet
+    private let actionSheetLauncher : ActionSheetLauncher
+    
+    private var replies = [Tweet]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     init(tweet : Tweet) {
         self.tweet = tweet
+        self.actionSheetLauncher = ActionSheetLauncher(user: tweet.user)
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
     }
     
@@ -28,6 +36,7 @@ class TweetController : UICollectionViewController {
         super.viewDidLoad()
         
         configureCollectionView()
+        fetchReply()
     }
     func configureCollectionView() {
         collectionView.backgroundColor = .white
@@ -35,24 +44,37 @@ class TweetController : UICollectionViewController {
         collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuserIdentifer)
         collectionView.register(TweetHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerIdentifer)
     }
+    
+    //MARK: - Heplers
+    
+    private func fetchReply() {
+        TweetService.shared.fetchReply(tweetId: tweet.tweetId) { (tweets) in
+            self.replies = tweets
+        }
+    }
 }
+
+
+
 //MARK: - CoolectionView Delegate
 
 
 extension TweetController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return replies.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuserIdentifer, for: indexPath) as! TweetCell
         
+        cell.tweet = replies[indexPath.item]
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerIdentifer, for: indexPath) as! TweetHeader
         
+        header.delegate = self
         header.tweet = tweet
         
         return header
@@ -73,7 +95,22 @@ extension TweetController  : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: view.frame.width, height: 120)
+        let viewModel = TweetViewModel(tweet: replies[indexPath.item])
+        let captionSize = viewModel.size(forWidth: view.frame.width).height
+
+        
+        return CGSize(width: view.frame.width, height: captionSize + 60)
     }
     
 }
+
+//MARK: - TweetHeader Delegates
+
+extension TweetController : TweetHeaderDelegate {
+    
+    func handleOptionButtonPressed() {
+        actionSheetLauncher.show()
+    }
+
+}
+
