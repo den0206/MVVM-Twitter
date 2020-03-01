@@ -33,6 +33,7 @@ public let kLIKES = "likes"
 public let kRETWEETS = "retweets"
 public let kCAPTION = "caption"
 public let kTWEETID = "tweetId"
+public let kREPLYINGTO = "replyingTo"
 
 
 

@@ -15,19 +15,34 @@ class TweetService {
     var newTweetListner : ListenerRegistration?
     
     
-    func uploadTweet(caption : String, completion : @escaping(Error?) -> Void) {
+    func uploadTweet(caption : String, type : UploadTweetConfiguration,  completion : @escaping(Error?) -> Void) {
         
         guard let uid = Auth.auth().currentUser?.uid else {return}
         let tweetId = UUID().uuidString
         
-        let values = [kUSERID : uid,
+        var values = [kUSERID : uid,
                       kCAPTION : caption,
                       kRETWEETS : 0,
                       kLIKES : 0,
                       kTWEETID : tweetId,
                       kTIMESTAMP : Int(NSDate().timeIntervalSince1970)] as [String : Any]
         
-        firebaseReferences(.Tweet).document(tweetId).setData(values, completion: completion)
+        
+        switch type {
+        case .tweet:
+            firebaseReferences(.Tweet).document(tweetId).setData(values, completion: completion)
+            
+        case .reply(let tweet) :
+            values[kREPLYINGTO] = tweet.user.username
+            
+            // create retweet Collection eaxh tweet
+            tweetReplyRreference(tweetId: tweet.tweetId).document(tweetId).setData(values, completion: completion)
+            
+            // retweet count Increment
+            firebaseReferences(.Tweet).document(tweet.tweetId).updateData([kRETWEETS : FieldValue.increment((Int64(1)))])
+            
+        }
+        
         
     }
     

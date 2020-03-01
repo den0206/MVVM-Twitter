@@ -125,6 +125,7 @@ extension FeedController : UICollectionViewDelegateFlowLayout {
 //MARK: - Tweet Cell Delegate
 
 extension FeedController : TweetCellDelegate {
+  
     func handleProfileImageTapped(cell: TweetCell) {
         
         guard let user = cell.tweet?.user else {return}
@@ -132,6 +133,17 @@ extension FeedController : TweetCellDelegate {
         let profileVC = ProfileController(user: user)
         navigationController?.pushViewController(profileVC, animated: true)
     }
+    
+    func handleRetweetTapped(cell: TweetCell) {
+    
+        guard let tweet = cell.tweet else {return}
+        let replyController = UploadTweetController(user: tweet.user, config: .reply(tweet))
+        let nav = UINavigationController(rootViewController: replyController)
+        nav.modalPresentationStyle = .fullScreen
+        self.present(nav, animated: true, completion: nil)
+        
+      }
+      
     
     
 }

@@ -13,6 +13,9 @@ class UploadTweetController : UIViewController {
     
     private let user : User
     
+    private let config : UploadTweetConfiguration
+    private lazy var viewModel = UploadTweetViewModel(config: config)
+    
     //MARK: - Parts
     
     private lazy var actionButton : UIButton = {
@@ -28,6 +31,15 @@ class UploadTweetController : UIViewController {
         button.addTarget(self, action: #selector(handleUploadTweet), for: .touchUpInside)
         
         return button
+    }()
+    
+    private lazy var replyLabel : UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = .darkGray
+        label.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        
+        return label
     }()
     
     private let profileImage : UIImageView = {
@@ -46,9 +58,10 @@ class UploadTweetController : UIViewController {
     
     //MARK: - Life Cycle
     
-    init(user : User) {
+    init(user : User, config : UploadTweetConfiguration) {
         
         self.user = user
+        self.config = config
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -68,9 +81,15 @@ class UploadTweetController : UIViewController {
         
         guard let caption = captionTextView.text else {return}
         
+        guard caption != " ", !caption.isEmpty else {
+            
+            // validation
+            print("No Word Validation")
+            return}
+        
   
         
-        TweetService.shared.uploadTweet(caption: caption) { (error) in
+        TweetService.shared.uploadTweet(caption: caption, type: config) { (error) in
             
             if error != nil {
                 print(error!.localizedDescription)
@@ -94,6 +113,7 @@ class UploadTweetController : UIViewController {
         view.backgroundColor = .white
         configureNavigationBar()
         
+        
         let imageCaptionStack = UIStackView(arrangedSubviews: [profileImage, captionTextView])
         imageCaptionStack.axis = .horizontal
         imageCaptionStack.spacing = 12
@@ -105,7 +125,14 @@ class UploadTweetController : UIViewController {
         // set profile Image
         profileImage.sd_setImage(with: user.profileImageUrl, completed: nil)
         
+        // use viewModel
         
+        actionButton.setTitle(viewModel.actionButtonTitle, for: .normal)
+        captionTextView.placegholderLabel.text = viewModel.placeholderText
+        
+        replyLabel.isHidden = !viewModel.sholdShowReplylabel
+        guard let replyText = viewModel.replyText else {return}
+        replyLabel.text = replyText
         
         
     }

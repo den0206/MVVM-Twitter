@@ -11,6 +11,8 @@ import UIKit
 protocol TweetCellDelegate {
     
     func handleProfileImageTapped(cell : TweetCell)
+    
+    func handleRetweetTapped(cell : TweetCell)
 
 }
 
@@ -140,7 +142,7 @@ class TweetCell: UICollectionViewCell {
     }
     
     @objc func handlereTweetTapped() {
-        
+        delegate?.handleRetweetTapped(cell: self)
     }
     
     @objc func handleLikeTapped() {
