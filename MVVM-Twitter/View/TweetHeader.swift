@@ -10,6 +10,12 @@ import UIKit
 
 class TweetHeader : UICollectionReusableView {
     
+    var tweet : Tweet? {
+        didSet {
+            configure()
+        }
+    }
+    
     //MARK: - Parts
     
     private lazy var profileImageView : UIImageView = {
@@ -112,11 +118,35 @@ class TweetHeader : UICollectionReusableView {
         return view
     }()
     
+    //MARK: - Buttons
+    
+    private lazy var commentButton : UIButton = {
+        let button = createButton(withImage: #imageLiteral(resourceName: "comment"))
+        return button
+    }()
+    
+    private lazy var reTweetButton : UIButton = {
+        let button = createButton(withImage: #imageLiteral(resourceName: "share"))
+        return button
+    }()
+    
+    private lazy var likeButton : UIButton = {
+        let button = createButton(withImage: #imageLiteral(resourceName: "like"))
+        return button
+    }()
+    
+    private lazy var shareButton : UIButton = {
+        let button = createButton(withImage: #imageLiteral(resourceName: "retweet"))
+        return button
+    }()
+    
+    
+    
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+            
         let labelStack = UIStackView(arrangedSubviews: [fullnameLabel, usernameLabel])
         labelStack.axis = .vertical
         labelStack.spacing = -6
@@ -145,6 +175,13 @@ class TweetHeader : UICollectionReusableView {
         
         addSubview(statsView)
         statsView.anchor(top : dateLabel.bottomAnchor, left: leftAnchor, right: rightAnchor,paddingTop: 12, height: 40)
+        
+        let buttonStack = UIStackView(arrangedSubviews: [commentButton, reTweetButton,likeButton, shareButton])
+        
+        buttonStack.spacing = 72
+        addSubview(buttonStack)
+        buttonStack.centerX(inView: self)
+        buttonStack.anchor(top : statsView.bottomAnchor, paddingTop: 16)
     }
     
     required init?(coder: NSCoder) {
@@ -163,6 +200,31 @@ class TweetHeader : UICollectionReusableView {
     
     
     //MARK: - Helper
+    
+    private func configure() {
+        guard let tweet = tweet else {return}
+        let viewModel = TweetViewModel(tweet: tweet)
+        
+        captionLabel.text = tweet.caption
+        fullnameLabel.text = viewModel.fullnameText
+        usernameLabel.text =  viewModel.usernameText
+        profileImageView.sd_setImage(with: viewModel.profileImageUrl, completed: nil)
+        dateLabel.text = viewModel.headerTimeStamp
+        
+        
+        
+        
+    }
+    
+    private func createButton(withImage image : UIImage) -> UIButton {
+        
+        let button = UIButton(type: .system)
+        button.setImage(image, for: .normal)
+        button.tintColor = .darkGray
+        button.setDimensions(width: 20, height: 20)
+        return button
+        
+    }
     
     
     

@@ -17,6 +17,20 @@ struct TweetViewModel {
         return tweet.user.profileImageUrl
     }
     
+    var fullnameText : String {
+        return "\(user.fullname)"
+    }
+    
+    var usernameText : String {
+        return "@\(user.username)"
+    }
+    
+    var headerTimeStamp : String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a · MM/dd/yyyy"
+        return formatter.string(from: tweet.timestamp)
+    }
+    
     var timestamp : String {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.second, .minute, .hour, .day, .weekOfMonth]
@@ -41,6 +55,19 @@ struct TweetViewModel {
     init(tweet : Tweet ) {
         self.tweet = tweet
         self.user = tweet.user
+        
+    }
+    
+    //MARK: - Helper
+    
+    func size (forWidth width : CGFloat) -> CGSize{
+        let measurementLabel = UILabel()
+        measurementLabel.text = tweet.caption
+        measurementLabel.numberOfLines = 0
+        measurementLabel.lineBreakMode = .byWordWrapping
+        measurementLabel.translatesAutoresizingMaskIntoConstraints = false
+        measurementLabel.widthAnchor.constraint(equalToConstant: width).isActive = true
+        return measurementLabel.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
         
     }
 }

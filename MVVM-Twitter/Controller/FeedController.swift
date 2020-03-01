@@ -102,6 +102,7 @@ extension FeedController {
         let tweet = tweets[indexPath.row]
         
         let tweetVC = TweetController(tweet: tweet)
+        
         navigationController?.pushViewController(tweetVC, animated: true)
     }
     
@@ -113,7 +114,10 @@ extension FeedController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: view.frame.width, height: 120)
+        let viewModel = TweetViewModel(tweet: tweets[indexPath.row])
+        let captionSize = viewModel.size(forWidth: view.frame.width).height
+        
+        return CGSize(width: view.frame.width, height: captionSize + 72)
     }
     
 }
