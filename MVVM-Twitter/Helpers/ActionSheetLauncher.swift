@@ -10,11 +10,18 @@ import UIKit
 
 private let reuseIdentifer = "ActionSheetCell"
 
+protocol ActionSheetDelegate : class {
+    func didSelect(option : ActionSheetOptions)
+}
+
 class ActionSheetLauncher : NSObject {
     
     private let user : User
     private let tableview = UITableView()
     private var window : UIWindow?
+    
+    private lazy var viewModel = ActionSheetViewModel(user: user)
+    weak var delegate : ActionSheetDelegate?
     
     private var tableViewHeight : CGFloat?
     
@@ -25,6 +32,7 @@ class ActionSheetLauncher : NSObject {
     init(user : User) {
         self.user = user
         super.init()
+        print(viewModel)
         
         configureTableView()
     }
@@ -61,6 +69,13 @@ class ActionSheetLauncher : NSObject {
         return button
     }()
     
+    func showTableView(_ shouldShow : Bool) {
+        guard let window = window else { return }
+        guard let height = tableViewHeight else { return }
+        let y = shouldShow ? window.frame.height - height : window.frame.height
+        tableview.frame.origin.y = y
+    }
+    
     
     func show() {
         print("AactionSheet\(user.fullname)")
@@ -73,13 +88,14 @@ class ActionSheetLauncher : NSObject {
         blackView.frame = window.frame
         
         window.addSubview(tableview)
-        let height = CGFloat(3 * 60)
+        let height = CGFloat(viewModel.options.count * 60) + 100
+        self.tableViewHeight = height
         tableview.frame = CGRect(x: 0, y: window.frame.height , width: window.frame.width, height: height)
         
         // show black view
         UIView.animate(withDuration: 0.5) {
             self.blackView.alpha = 1
-            self.tableview.frame.origin.y -= height
+            self.showTableView(true)
             
         }
         
@@ -92,7 +108,7 @@ class ActionSheetLauncher : NSObject {
         tableview.delegate = self
         tableview.dataSource = self
         
-        tableview.rowHeight = 40
+        tableview.rowHeight = 60
         tableview.separatorStyle = .none
         tableview.layer.cornerRadius = 5
         tableview.isScrollEnabled = false
@@ -113,12 +129,12 @@ class ActionSheetLauncher : NSObject {
 extension ActionSheetLauncher : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return viewModel.options.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifer, for: indexPath) as! ActionSheetCell
-        
+        cell.option = viewModel.options[indexPath.row]
         return cell
     }
     
@@ -132,5 +148,17 @@ extension ActionSheetLauncher : UITableViewDelegate, UITableViewDataSource {
         return 60
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let option = viewModel.options[indexPath.row]
+        
+        // hide Acrtion shher
+        UIView.animate(withDuration: 0.5, animations: {
+            self.blackView.alpha = 0
+            self.showTableView(false)
+        }) { (_) in
+            self.delegate?.didSelect(option: option)
+        }
+        
+    }
     
 }

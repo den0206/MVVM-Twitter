@@ -14,7 +14,7 @@ private let reuserIdentifer = "TweetCell"
 class TweetController : UICollectionViewController {
     
     private let  tweet : Tweet
-    private let actionSheetLauncher : ActionSheetLauncher
+    private var actionSheetLauncher : ActionSheetLauncher!
     
     private var replies = [Tweet]() {
         didSet {
@@ -24,7 +24,6 @@ class TweetController : UICollectionViewController {
     
     init(tweet : Tweet) {
         self.tweet = tweet
-        self.actionSheetLauncher = ActionSheetLauncher(user: tweet.user)
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
     }
     
@@ -43,6 +42,12 @@ class TweetController : UICollectionViewController {
         
         collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuserIdentifer)
         collectionView.register(TweetHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerIdentifer)
+    }
+    
+    fileprivate func showActionSheet(forUser user : User) {
+        actionSheetLauncher = ActionSheetLauncher(user: user)
+        actionSheetLauncher.show()
+        actionSheetLauncher.delegate = self
     }
     
     //MARK: - Heplers
@@ -109,8 +114,39 @@ extension TweetController  : UICollectionViewDelegateFlowLayout {
 extension TweetController : TweetHeaderDelegate {
     
     func handleOptionButtonPressed() {
-        actionSheetLauncher.show()
+        if tweet.user.isCurrentUser {
+            showActionSheet(forUser: tweet.user)
+        } else {
+            
+            // not current user
+            
+            UserService.shared.fetchUserIsFollowed(uid: tweet.user.uid) { (isFollowed) in
+                
+                var user = self.tweet.user
+                user.isFollowed = isFollowed
+                self.showActionSheet(forUser: user)
+            }
+        }
+
     }
 
+}
+
+extension TweetController : ActionSheetDelegate {
+    func didSelect(option: ActionSheetOptions) {
+        
+        switch option {
+        case .follow(let user):
+            user.follow()
+        case .unfollow(let user):
+            user.unFollow()
+        case .report:
+            print("report")
+        case .delete:
+            print("Delete")
+        }
+    }
+    
+    
 }
 

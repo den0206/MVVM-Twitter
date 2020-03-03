@@ -8,7 +8,14 @@
 
 import UIKit
 
+
+
 class ActionSheetCell : UITableViewCell {
+    var option : ActionSheetOptions? {
+        didSet {
+            configure()
+        }
+    }
     
     //MARK: - Parts
     
@@ -49,5 +56,8 @@ class ActionSheetCell : UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    private func configure() {
+        self.titleLabel.text = option?.description
     }
 }
