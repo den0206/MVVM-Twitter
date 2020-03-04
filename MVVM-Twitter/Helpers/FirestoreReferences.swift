@@ -15,6 +15,7 @@ enum References : String {
 //    case Reply
     case Following
     case Follower
+    case Notification
 }
 
 func firebaseReferences(_ reference : References) -> CollectionReference {

@@ -221,6 +221,9 @@ class TweetHeader : UICollectionReusableView {
         retweetsLabel.attributedText = viewModel.retweetAttributedString
         likesLabel.attributedText = viewModel.likesAttributedString
         
+        likeButton.tintColor = tweet.didLike ? .red : .lightGray
+        likeButton.setImage(viewModel.likeButtonImage, for: .normal)
+        
         
         
         

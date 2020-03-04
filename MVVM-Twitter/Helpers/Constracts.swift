@@ -35,6 +35,9 @@ public let kCAPTION = "caption"
 public let kTWEETID = "tweetId"
 public let kREPLYINGTO = "replyingTo"
 
+public let kNOTIFICATION = "NOTIFICATION"
+public let  kTYPE = "type"
+
 
 
 
