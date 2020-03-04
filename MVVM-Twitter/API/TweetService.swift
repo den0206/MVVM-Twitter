@@ -137,6 +137,39 @@ class TweetService {
         }
     }
     
+    func likeTweet(tweet : Tweet, completion : @escaping(Error?) -> Void) {
+        guard let currentUid = Auth.auth().currentUser?.uid else {return}
+        
+        // adjust Count
+        let likes = tweet.didLike ? tweet.likes - 1 : tweet.likes + 1
+        firebaseReferences(.Tweet).document(tweet.tweetId).updateData([kLIKES : likes])
+        
+        if tweet.didLike {
+            // remove Like
+            firebaseReferences(.Tweet).document(tweet.tweetId).collection(kLIKES).document(currentUid).delete { (error) in
+                completion(error)
+            }
+        } else {
+            // add Like
+            firebaseReferences(.Tweet).document(tweet.tweetId).collection(kLIKES).document(currentUid).setData([kTIMESTAMP : Int(NSDate().timeIntervalSince1970)]) { (error) in
+                completion(error)
+            }
+        }
+        
+        
+    }
+    
+    func checkIfUserLikedTweet(_ tweet : Tweet, completion : @escaping(Bool) -> Void) {
+       guard let currentUid = Auth.auth().currentUser?.uid else {return}
+        firebaseReferences(.Tweet).document(tweet.tweetId).collection(kLIKES).document(currentUid).getDocument { (snapshot, error) in
+            
+            guard let snapshot = snapshot else {return}
+            
+            completion(snapshot.exists)
+        }
+
+    }
+    
     //MARK: - Helper
     
     func fetchTweetOfUser(userId : String, completion : @escaping(User) -> Void) {

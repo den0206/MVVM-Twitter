@@ -16,6 +16,7 @@ struct Tweet {
     let retweetCount : Int
     let uid : String
     let user : User
+    var didLike = false
     
     
     
