@@ -27,4 +27,31 @@ struct NotificationService {
         firebaseReferences(.User).document(user.uid).collection(kNOTIFICATION).document().setData(values)
         
     }
+    
+    func fetchNotification(completion : @escaping([Notification]) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        
+        var notifications = [Notification]()
+        
+        firebaseReferences(.User).document(uid).collection(kNOTIFICATION).getDocuments { (snapshot, error) in
+            
+            guard let snapshot = snapshot else {return}
+            
+            if !snapshot.isEmpty {
+                for document in snapshot.documents {
+                    let dictionary = document.data()
+                    let uid = dictionary[kUSERID] as! String
+                    
+                    UserService.shared.fetchUser(uid: uid) { (user) in
+                        
+                        let notification = Notification(user: user, dictionary: dictionary)
+                        notifications.append(notification)
+                        completion(notifications)
+                         
+                    }
+                }
+            }
+        }
+        
+    }
 }

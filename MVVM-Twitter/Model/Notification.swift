@@ -20,12 +20,12 @@ struct Notification {
     let tweetId : String?
     var timeStamp : Date!
     let user : User
-    let tweet : Tweet?
+    var tweet : Tweet?
     var type : NotificationType!
     
-    init(user : User, tweet : Tweet?, dictionary : [String : Any]) {
+    init(user : User,  dictionary : [String : Any]) {
         self.user = user
-        self.tweet = tweet
+       
         
         self.tweetId = dictionary[kTWEETID] as? String ?? ""
         

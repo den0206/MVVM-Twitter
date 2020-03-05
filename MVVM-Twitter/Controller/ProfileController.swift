@@ -153,6 +153,10 @@ extension ProfileController : ProfileHeaderDelegate {
         } else {
             user.isFollowed = true
             user.follow()
+            
+            // Notification
+            
+            NotificationService.shared.uploadNotification(toUser: self.user, type: .follow)
         }
     }
     

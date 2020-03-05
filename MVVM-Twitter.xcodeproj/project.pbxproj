@@ -45,6 +45,7 @@
 		3ACA7F1E240388C300A81FF2 /* inputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACA7F1D240388C300A81FF2 /* inputTextView.swift */; };
 		3AF79F2D24039A4B00C02332 /* TweetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF79F2C24039A4B00C02332 /* TweetService.swift */; };
 		3AF79F2F2403A37F00C02332 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF79F2E2403A37F00C02332 /* Tweet.swift */; };
+		3AFF997E241137270049237D /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFF997D241137270049237D /* NotificationCell.swift */; };
 		7F573B10F2B27A042051CF64 /* Pods_MVVM_Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06F70B706193EBAE17A4E456 /* Pods_MVVM_Twitter.framework */; };
 /* End PBXBuildFile section */
 
@@ -92,6 +93,7 @@
 		3ACA7F1D240388C300A81FF2 /* inputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inputTextView.swift; sourceTree = "<group>"; };
 		3AF79F2C24039A4B00C02332 /* TweetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetService.swift; sourceTree = "<group>"; };
 		3AF79F2E2403A37F00C02332 /* Tweet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
+		3AFF997D241137270049237D /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 				3ABB3A232409FF6D0090FF45 /* UserCell.swift */,
 				3A094682240A943000783118 /* TweetHeader.swift */,
 				3A03B208240D314600E639A9 /* ActionSheetCell.swift */,
+				3AFF997D241137270049237D /* NotificationCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 				3A94B6B92401F49900B66957 /* MainTabController.swift in Sources */,
 				3A094683240A943000783118 /* TweetHeader.swift in Sources */,
 				3ACA7F1E240388C300A81FF2 /* inputTextView.swift in Sources */,
+				3AFF997E241137270049237D /* NotificationCell.swift in Sources */,
 				3AC4124C24069B2500B3FA4E /* TweetViewModel.swift in Sources */,
 				3AAD840424021EAE00C3ECE2 /* SignUpVC.swift in Sources */,
 				3AAA4D9424028A48007DCFAB /* AuthService.swift in Sources */,
