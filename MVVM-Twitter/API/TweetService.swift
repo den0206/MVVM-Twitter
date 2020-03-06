@@ -46,6 +46,25 @@ class TweetService {
         
     }
     
+    func fetxhSingleTweet(withTweetId tweetId : String, completion : @escaping(Tweet) -> Void) {
+        
+        firebaseReferences(.Tweet).document(tweetId).getDocument { (snapshot, error) in
+
+            guard let snapshot = snapshot else {return}
+
+            if snapshot.exists {
+                let dictionary = snapshot.data()!
+                let uid = dictionary[kUSERID] as! String
+           
+                UserService.shared.fetchUser(uid: uid) { (user) in
+                    let tweet = Tweet(user: user, tweetId: tweetId, dictionary: dictionary)
+                    
+                    completion(tweet)
+                }
+            }
+        }
+    }
+    
     func fetchTweets(completion : @escaping([Tweet]) -> Void) {
         
         var tweets = [Tweet]()

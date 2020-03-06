@@ -43,16 +43,47 @@ class NotificationController : UITableViewController {
         tableView.rowHeight = 60
         tableView.separatorStyle = .none
         
+        let refreshController = UIRefreshControl()
+        tableView.refreshControl = refreshController
+        refreshController.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        
+    }
+    
+    @objc func handleRefresh() {
+        fetchNotification()
     }
     
     // fetch Notification
     
     private func fetchNotification() {
+        refreshControl?.beginRefreshing()
         
         NotificationService.shared.fetchNotification { (notifications) in
+            
+            self.refreshControl?.endRefreshing()
+            self.notifications = notifications.sorted(by: { $0.timeStamp >  $1.timeStamp })
+            
             self.notifications = notifications
+            self.checkIfUserIsFollwed(notifications: notifications)
+            
         }
         
+    }
+    
+    func checkIfUserIsFollwed(notifications : [Notification]) {
+        guard !notifications.isEmpty else {return}
+        
+        notifications.forEach { (notification) in
+            
+            guard case .follow = notification.type else {return}
+            let user = notification.user
+            
+            UserService.shared.fetchUserIsFollowed(uid: user.uid) { (isFollowed) in
+                if let index = self.notifications.firstIndex(where: {$0.user.uid == notification.user.uid}) {
+                    self.notifications[index].user.isFollowed = isFollowed
+                }
+            }
+        }
     }
     
     
@@ -77,17 +108,48 @@ extension NotificationController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let notification = notifications[indexPath.row]
+        
+        // if notification has "Tweet ID"
+        guard let tweetId = notification.tweetId else {
+            print("No TweetID")
+            return}
+        
+        TweetService.shared.fetxhSingleTweet(withTweetId: tweetId) { (tweet) in
+            let tweetVC = TweetController(tweet: tweet)
+            self.navigationController?.pushViewController(tweetVC, animated: true)
+        }
+        
+        
+    }
+    
 }
 
 //MARK: - Notification Delegate
 
 extension NotificationController : NotificationCellDelegate {
     func handleProfilaImageTapped(_ cell: NotificationCell) {
-        print("image")
+        guard let user = cell.notification?.user else {return}
+        
+        let profileVC = ProfileController(user: user)
+        navigationController?.pushViewController(profileVC, animated: true)
     }
     
     func handleFollowButtonTapped(_ cell: NotificationCell) {
-        print("Button")
+        
+        guard let user = cell.notification?.user else {return}
+        
+        if user.isFollowed {
+            user.unFollow()
+            cell.notification?.user.isFollowed = false
+        } else {
+            user.follow()
+            cell.notification?.user.isFollowed = true
+        }
     }
     
     

@@ -88,8 +88,13 @@ class NotificationCell : UITableViewCell {
     
     private func configure() {
         guard let notification = notification else {return}
+        let viewModel = NotificationViewModel(notification: notification)
         
-        
+        profileImegeView.sd_setImage(with: viewModel.profileImageUrl, completed: nil)
+        notificationLabel.attributedText = viewModel.notificationText
+
+        followButton.isHidden = viewModel.shouldHideFollowButton
+        followButton.setTitle(viewModel.followButtonText, for: .normal)
     }
     
     //MARK: - Actions

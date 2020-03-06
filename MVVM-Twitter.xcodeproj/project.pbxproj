@@ -45,6 +45,7 @@
 		3ACA7F1E240388C300A81FF2 /* inputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACA7F1D240388C300A81FF2 /* inputTextView.swift */; };
 		3AF79F2D24039A4B00C02332 /* TweetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF79F2C24039A4B00C02332 /* TweetService.swift */; };
 		3AF79F2F2403A37F00C02332 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF79F2E2403A37F00C02332 /* Tweet.swift */; };
+		3AFCAE932412707E0089A2AF /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFCAE922412707E0089A2AF /* NotificationViewModel.swift */; };
 		3AFF997E241137270049237D /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFF997D241137270049237D /* NotificationCell.swift */; };
 		7F573B10F2B27A042051CF64 /* Pods_MVVM_Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06F70B706193EBAE17A4E456 /* Pods_MVVM_Twitter.framework */; };
 /* End PBXBuildFile section */
@@ -93,6 +94,7 @@
 		3ACA7F1D240388C300A81FF2 /* inputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inputTextView.swift; sourceTree = "<group>"; };
 		3AF79F2C24039A4B00C02332 /* TweetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetService.swift; sourceTree = "<group>"; };
 		3AF79F2E2403A37F00C02332 /* Tweet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
+		3AFCAE922412707E0089A2AF /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		3AFF997D241137270049237D /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -232,6 +234,7 @@
 				3A31EC7F240935CE006797FA /* ProfileHeaderViewModel.swift */,
 				3A3286DE240B6F1700B5F4CF /* UploadTweetViewModel.swift */,
 				3AC4CCC0240E89E900761A4D /* ActionSheetrViewModel.swift */,
+				3AFCAE922412707E0089A2AF /* NotificationViewModel.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -378,6 +381,7 @@
 				3A459647240215F800F86A00 /* Extensions.swift in Sources */,
 				3A03B209240D314600E639A9 /* ActionSheetCell.swift in Sources */,
 				3A687B43240A04BD00617489 /* SearchController.swift in Sources */,
+				3AFCAE932412707E0089A2AF /* NotificationViewModel.swift in Sources */,
 				3A94B6A02401F39600B66957 /* AppDelegate.swift in Sources */,
 				3A094681240A917C00783118 /* TweetController.swift in Sources */,
 				3A021A572408008C00B7E14D /* ProfileFilterView.swift in Sources */,

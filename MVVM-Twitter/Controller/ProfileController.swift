@@ -16,8 +16,17 @@ class ProfileController : UICollectionViewController {
     
     private var user : User
     
-    private var tweets = [Tweet]()
+    private var selectedFilter : ProfileFilterOptions {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
+    private var tweets = [Tweet]()
+    private var likedTweets = [Tweet]()
+    private var replyTweets = [Tweet]()
+    
+    private var currentDataSource = [Tweet]()
     
     
     init(user : User) {
@@ -60,7 +69,7 @@ class ProfileController : UICollectionViewController {
     private func fetchTweets() {
         TweetService.shared.fetchTweetsForUser(user: user) { (tweets) in
             
-            self.tweets = tweets.sorted(by: { $0.timestamp >  $1.timestamp })
+            self.currentDataSource = tweets.sorted(by: { $0.timestamp >  $1.timestamp })
             self.collectionView.reloadData()
         }
     }
@@ -91,14 +100,14 @@ extension ProfileController {
     // data Source
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tweets.count
+        return currentDataSource.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuserIdentifier, for: indexPath) as! TweetCell
         
-        cell.tweet = tweets[indexPath.item]
+        cell.tweet = currentDataSource[indexPath.item]
         
         return cell
     }
