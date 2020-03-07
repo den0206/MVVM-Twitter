@@ -34,6 +34,7 @@ public let kRETWEETS = "retweets"
 public let kCAPTION = "caption"
 public let kTWEETID = "tweetId"
 public let kREPLYINGTO = "replyingTo"
+public let kUSERIDTO = "userIDTo"
 
 public let kNOTIFICATION = "NOTIFICATION"
 public let  kTYPE = "type"

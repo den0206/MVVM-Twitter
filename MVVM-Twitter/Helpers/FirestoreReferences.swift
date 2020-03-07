@@ -16,9 +16,11 @@ enum References : String {
     case Following
     case Follower
     case Notification
+    case likes
 }
 
 func firebaseReferences(_ reference : References) -> CollectionReference {
+    
     return Firestore.firestore().collection(reference.rawValue)
 }
 

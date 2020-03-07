@@ -16,6 +16,7 @@
 		3A31EC80240935CF006797FA /* ProfileHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A31EC7F240935CE006797FA /* ProfileHeaderViewModel.swift */; };
 		3A3286DF240B6F1700B5F4CF /* UploadTweetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3286DE240B6F1700B5F4CF /* UploadTweetViewModel.swift */; };
 		3A459647240215F800F86A00 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A459646240215F800F86A00 /* Extensions.swift */; };
+		3A5C9940241368D000905B0B /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5C993F241368D000905B0B /* EditProfileController.swift */; };
 		3A687B43240A04BD00617489 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A687B42240A04BD00617489 /* SearchController.swift */; };
 		3A94B6A02401F39600B66957 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A94B69F2401F39600B66957 /* AppDelegate.swift */; };
 		3A94B6A22401F39600B66957 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A94B6A12401F39600B66957 /* SceneDelegate.swift */; };
@@ -63,6 +64,7 @@
 		3A31EC7F240935CE006797FA /* ProfileHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderViewModel.swift; sourceTree = "<group>"; };
 		3A3286DE240B6F1700B5F4CF /* UploadTweetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadTweetViewModel.swift; sourceTree = "<group>"; };
 		3A459646240215F800F86A00 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		3A5C993F241368D000905B0B /* EditProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
 		3A687B42240A04BD00617489 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		3A94B69C2401F39600B66957 /* MVVM-Twitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MVVM-Twitter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A94B69F2401F39600B66957 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				3ACA7F1B2403856700A81FF2 /* UploadTweetController.swift */,
 				3AC4124D2406A4D700B3FA4E /* ProfileController.swift */,
 				3A094680240A917C00783118 /* TweetController.swift */,
+				3A5C993F241368D000905B0B /* EditProfileController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 				3AAA4D9824028C19007DCFAB /* FirestoreReferences.swift in Sources */,
 				3ABB3A242409FF6D0090FF45 /* UserCell.swift in Sources */,
 				3A459647240215F800F86A00 /* Extensions.swift in Sources */,
+				3A5C9940241368D000905B0B /* EditProfileController.swift in Sources */,
 				3A03B209240D314600E639A9 /* ActionSheetCell.swift in Sources */,
 				3A687B43240A04BD00617489 /* SearchController.swift in Sources */,
 				3AFCAE932412707E0089A2AF /* NotificationViewModel.swift in Sources */,

@@ -9,6 +9,7 @@
 import Foundation
 import Firebase
 
+
 class TweetService {
     static let shared = TweetService()
     
@@ -34,6 +35,7 @@ class TweetService {
             
         case .reply(let tweet) :
             values[kREPLYINGTO] = tweet.user.username
+            values[kUSERIDTO] = tweet.user.uid
             
             // create retweet Collection eaxh tweet
             tweetReplyRreference(tweetId: tweet.tweetId).document(tweetId).setData(values, completion: completion)
@@ -64,6 +66,8 @@ class TweetService {
             }
         }
     }
+    
+    
     
     func fetchTweets(completion : @escaping([Tweet]) -> Void) {
         
@@ -111,6 +115,56 @@ class TweetService {
         
         
     }
+    
+    func fetchLikes(user : User, completion : @escaping([Tweet]) -> Void) {
+        var likesTweets = [Tweet]()
+        
+        Firestore.firestore().collectionGroup(kLIKES).whereField(kUSERID, isEqualTo: user.uid).getDocuments { (snapshot, error) in
+            
+            guard let snapshot = snapshot else {
+                print(error?.localizedDescription)
+                return}
+            
+            if !snapshot.isEmpty {
+                for document in snapshot.documents {
+                    let dictionary = document.data()
+                    let tweetId = dictionary[kTWEETID] as! String
+                    
+                    TweetService.shared.fetxhSingleTweet(withTweetId: tweetId) { (tweet) in
+                        likesTweets.append(tweet)
+                        completion(likesTweets)
+                    }
+                }
+            }
+            
+        }
+        
+    }
+    
+    func fetchReply(user : User, completion : @escaping([Tweet]) -> Void) {
+        Firestore.firestore().collectionGroup(kRETWEETS).whereField(kUSERIDTO, isEqualTo: user.uid).getDocuments { (snapshot, error) in
+            var replyTweets = [Tweet]()
+            
+            guard let snapshot = snapshot else {
+                print(error?.localizedDescription)
+                return}
+            
+            if !snapshot.isEmpty {
+                for document in snapshot.documents {
+                    let dictionary = document.data()
+                    let tweetId = dictionary[kTWEETID] as! String
+                    let userId = dictionary[kUSERID] as! String
+                    
+                    UserService.shared.fetchUser(uid: userId) { (user) in
+                        let tweet = Tweet(user: user, tweetId: tweetId, dictionary: dictionary)
+                        replyTweets.append(tweet)
+                        completion(replyTweets)
+                    }
+                }
+            }
+        }
+    }
+    
     
     func fetchTweetsForUser(user : User, completion : @escaping([Tweet]) -> Void) {
         
@@ -170,7 +224,12 @@ class TweetService {
             }
         } else {
             // add Like
-            firebaseReferences(.Tweet).document(tweet.tweetId).collection(kLIKES).document(currentUid).setData([kTIMESTAMP : Int(NSDate().timeIntervalSince1970)]) { (error) in
+            
+            let values = [kTIMESTAMP : Int(NSDate().timeIntervalSince1970),
+                          kUSERID : currentUid,
+                          kTWEETID : tweet.tweetId] as [String : Any]
+            
+            firebaseReferences(.Tweet).document(tweet.tweetId).collection(kLIKES).document(currentUid).setData(values) { (error) in
                 completion(error)
             }
         }

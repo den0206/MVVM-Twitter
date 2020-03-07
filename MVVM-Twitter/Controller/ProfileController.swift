@@ -16,7 +16,7 @@ class ProfileController : UICollectionViewController {
     
     private var user : User
     
-    private var selectedFilter : ProfileFilterOptions {
+    private var selectedFilter : ProfileFilterOptions = .tweet{
         didSet {
             collectionView.reloadData()
         }
@@ -26,7 +26,17 @@ class ProfileController : UICollectionViewController {
     private var likedTweets = [Tweet]()
     private var replyTweets = [Tweet]()
     
-    private var currentDataSource = [Tweet]()
+    private var currentDataSource : [Tweet] {
+        switch selectedFilter {
+       
+        case .tweet:
+            return tweets
+        case .replies:
+            return replyTweets
+        case .likes:
+            return likedTweets
+        }
+    }
     
     
     init(user : User) {
@@ -42,7 +52,12 @@ class ProfileController : UICollectionViewController {
         super.viewDidLoad()
         
         configureCollectionView()
+        
+        // fetch Tweets Area
         fetchTweets()
+        fetchLikes()
+        fetchReply()
+        
         fetchIfUsersFollowed()
         fetchUserStats()
     }
@@ -68,9 +83,22 @@ class ProfileController : UICollectionViewController {
     
     private func fetchTweets() {
         TweetService.shared.fetchTweetsForUser(user: user) { (tweets) in
-            
-            self.currentDataSource = tweets.sorted(by: { $0.timestamp >  $1.timestamp })
+            self.tweets = tweets.sorted(by: { $0.timestamp >  $1.timestamp })
             self.collectionView.reloadData()
+        }
+    }
+    
+    private func fetchLikes() {
+        TweetService.shared.fetchLikes(user: user) { (likedtweets) in
+            self.likedTweets = likedtweets
+            print(self.likedTweets.count)
+        }
+    }
+    
+    private func fetchReply() {
+        TweetService.shared.fetchReply(user: user) { (replyTweets) in
+            self.replyTweets = replyTweets
+            print(self.replyTweets.count)
         }
     }
     
@@ -168,6 +196,12 @@ extension ProfileController : ProfileHeaderDelegate {
             NotificationService.shared.uploadNotification(toUser: self.user, type: .follow)
         }
     }
+    
+    
+    func didSelect(filter: ProfileFilterOptions) {
+        self.selectedFilter = filter
+    }
+ 
     
     func handleFollowingLabelTapped() {
          print("Following")
