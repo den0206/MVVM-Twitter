@@ -77,6 +77,40 @@ class UserService {
         }
     }
     
+    func fetchFollowingIDs(uid : String, completion : @escaping([String]) -> Void) -> ListenerRegistration? {
+        var followingIds = [uid]
+        
+        return firebaseReferences(.User).document(uid).collection(kFOLLOWING).addSnapshotListener { (snapshot, error) in
+            
+            guard let snapshot = snapshot else {return}
+            
+            if !snapshot.isEmpty {
+                
+                
+                snapshot.documentChanges.forEach { diff in
+                    
+                    
+                    if (diff.type == .added) {
+                        
+                        let followingId = diff.document.documentID
+                        followingIds.append(followingId)
+                    }
+                    
+                    if (diff.type == .removed) {
+                        let unFollowingId = diff.document.documentID
+                        followingIds.remove(at: followingIds.firstIndex(of: unFollowingId)!)
+                    }
+                  
+                }
+                completion(followingIds)
+            } else {
+                completion([uid])
+            }
+            
+        }
+        
+    }
+    
    
 
     

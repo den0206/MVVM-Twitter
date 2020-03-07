@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import Firebase
 
 private let reuserIdentifier = "tweetCell"
 
@@ -19,17 +20,26 @@ class FeedController : UICollectionViewController {
         }
     }
     
+    private var followingIDs = [String]()
+    var followingListner : ListenerRegistration?
+    
     private var tweets = [Tweet]() {
         didSet {
             collectionView.reloadData()
         }
     }
     
+    deinit {
+        followingListner?.remove()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureUI()
-        fetchTweets()
+        fetchFollowingIDs()
+//        fetchTweets()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,6 +60,10 @@ class FeedController : UICollectionViewController {
         let imageView = UIImageView(image: UIImage(named: "twitter_logo_blue"))
         imageView.contentMode = .scaleAspectFit
         navigationItem.titleView = imageView
+        
+        let refreshController = UIRefreshControl()
+        collectionView.refreshControl = refreshController
+        refreshController.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
     }
     
     func configureLeftButton() {
@@ -65,6 +79,28 @@ class FeedController : UICollectionViewController {
         profileImageView.sd_setImage(with: user.profileImageUrl, completed: nil)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileImageView)
+    }
+    
+    func fetchFollowingIDs() {
+        guard let currentUid = Auth.auth().currentUser?.uid else {return}
+        
+        collectionView.refreshControl?.beginRefreshing()
+        // get followingIds
+        
+        followingListner =  UserService.shared.fetchFollowingIDs(uid: currentUid) { (followingIDs) in
+            self.followingIDs = followingIDs
+            
+            for uid in self.followingIDs {
+                UserService.shared.fetchUser(uid: uid) { (user) in
+                    TweetService.shared.fetchTweetsForUser(user: user) { (tweets) in
+                        self.tweets = tweets.sorted(by: { $0.timestamp >  $1.timestamp })
+                        self.checkifUserLikedTweet()
+                        
+                        self.collectionView.refreshControl?.endRefreshing()
+                    }
+                }
+            }
+        }
     }
     
     func fetchTweets() {
@@ -90,6 +126,10 @@ class FeedController : UICollectionViewController {
                 }
             }
         }
+    }
+    
+    @objc func handleRefresh() {
+        fetchFollowingIDs()
     }
     
 }
