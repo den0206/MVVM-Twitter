@@ -23,6 +23,7 @@ public let kPASSWORD = "password"
 public let kPROFILE_IMAGE = "profileImage"
 public let kUSERNAME = "username"
 public let kFULLNAME = "fullname"
+public let kBIO = "bio"
 public let kFOLLOWING = "FOLLOWING"
 public let kFOLLOWERS = "FOLLOWER"
 

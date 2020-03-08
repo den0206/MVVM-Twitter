@@ -217,7 +217,8 @@ extension ProfileController : ProfileHeaderDelegate {
     
 }
 
-extension ProfileController : EditProfileFooterDelegate {
+extension ProfileController : EditProfileControllerDelegate {
+  
     func handleLogout() {
         do {
             try Auth.auth().signOut()
@@ -228,6 +229,13 @@ extension ProfileController : EditProfileFooterDelegate {
             print("DEBUG: Failed to sign out with error \(error.localizedDescription)")
         }
     }
+    
+    func reload(_ controller: EditProfileController, user: User) {
+        controller.dismiss(animated: true, completion: nil)
+        self.user = user
+        self.collectionView.reloadData()
+      }
+      
     
     
 }

@@ -125,15 +125,15 @@ class MainTabController: UITabBarController {
         return nav
     }
 //
-//    func handleLogout() {
-//        do {
-//            try Auth.auth().signOut()
-//            let nav = UINavigationController(rootViewController: LoginVC())
-//            nav.modalPresentationStyle = .fullScreen
-//            self.present(nav, animated: true, completion: nil)
-//        } catch let error {
-//            print("DEBUG: Failed to sign out with error \(error.localizedDescription)")
-//        }
-//    }
+    func handleLogout() {
+        do {
+            try Auth.auth().signOut()
+            let nav = UINavigationController(rootViewController: LoginVC())
+            nav.modalPresentationStyle = .fullScreen
+            self.present(nav, animated: true, completion: nil)
+        } catch let error {
+            print("DEBUG: Failed to sign out with error \(error.localizedDescription)")
+        }
+    }
     
 }

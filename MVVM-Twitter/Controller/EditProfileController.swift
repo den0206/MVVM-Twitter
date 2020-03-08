@@ -12,6 +12,7 @@ private let reuserIdentifer = "EditProfileCell"
 
 protocol EditProfileControllerDelegate : class {
     func handleLogout()
+    func reload(_ controller : EditProfileController, user : User)
 }
 
 class EditProfileController : UITableViewController {
@@ -22,7 +23,12 @@ class EditProfileController : UITableViewController {
     private lazy var header = EditProfileHeader(user: user)
     private let footerView = EditProfileFooter()
     private let imagePicker = UIImagePickerController()
-    var delegate : EditProfileFooterDelegate?
+    private var userinfoCganged = false
+    var delegate : EditProfileControllerDelegate?
+    
+    private  var imageChanged : Bool {
+        return selectedImage != nil
+    }
     
     private var selectedImage : UIImage? {
         didSet {
@@ -62,6 +68,7 @@ class EditProfileController : UITableViewController {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
+        
     }
     
     private func configureTableview() {
@@ -86,7 +93,25 @@ class EditProfileController : UITableViewController {
     //MARK: - Actions
     
     @objc func handleSave() {
-        print("Save")
+        
+        // only Image
+        
+        if imageChanged && !userinfoCganged {
+            print("Image")
+        }
+        
+        // only userinfo
+        if userinfoCganged && !imageChanged {
+            UserService.shared.saveUserData(user: user) { (error) in
+                // reload profileVC
+                self.delegate?.reload(self, user: self.user)
+            }
+        }
+        
+        // both
+        if userinfoCganged && imageChanged {
+            print("Both")
+        }
     }
     
     @objc func handleCancel() {
@@ -98,15 +123,56 @@ class EditProfileController : UITableViewController {
 
 extension EditProfileController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return EditProfileOptions.allCases.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: reuserIdentifer, for: indexPath) as! EditProfileCell
+        cell.delegate = self
+        
+        guard let option = EditProfileOptions(rawValue: indexPath.row) else {return cell}
+        cell.viewmodel = EditProfileViewModel(user: user, option: option)
+        
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let option = EditProfileOptions(rawValue: indexPath.row) else {return 0}
+        
+        if option == .bio {
+            return 100
+        }
+        
+        return 48
+    }
+}
+
+//MARK: - EditProfileCell Delegate
+
+extension EditProfileController : EditProfileCellDelegate {
+    func handleUpdateUserInfo(_ cell: EditProfileCell) {
+        
+        guard let viewmodel = cell.viewmodel else {return}
+        userinfoCganged = true
+        navigationItem.rightBarButtonItem?.isEnabled = true
+        
+        switch viewmodel.option {
+
+        case .fullname:
+            guard let fullname = cell.infoTextField.text else {return}
+            user.fullname = fullname
+        case .username:
+            guard let username = cell.infoTextField.text else {return}
+            user.username = username
+        case .bio :
+            user.bio = cell.bioTextView.text
+        }
+        
+    }
+    
+    
 }
 
 //MARK: - EditProfileHeaderDelegate

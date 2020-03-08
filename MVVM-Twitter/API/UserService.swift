@@ -111,6 +111,16 @@ class UserService {
         
     }
     
+    func saveUserData(user : User, completion : @escaping(Error?) -> Void) {
+        guard let currentUid = Auth.auth().currentUser?.uid else {return}
+        
+        let values = [kFULLNAME : user.fullname,
+                      kUSERNAME : user.username,
+                      kBIO : user.bio ?? ""]
+        
+        firebaseReferences(.User).document(currentUid).updateData(values, completion: completion)
+    }
+    
    
 
     

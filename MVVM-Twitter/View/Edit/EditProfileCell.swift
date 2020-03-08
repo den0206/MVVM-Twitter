@@ -14,6 +14,12 @@ protocol EditProfileCellDelegate : class{
 
 class EditProfileCell : UITableViewCell {
     
+    var viewmodel : EditProfileViewModel? {
+        didSet {
+            configure()
+        }
+    }
+    
     weak var delegate : EditProfileCellDelegate?
     
     //MARK: - Parts
@@ -60,6 +66,22 @@ class EditProfileCell : UITableViewCell {
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleUpdateUserInfo), name: UITextView.textDidEndEditingNotification, object: nil)
         
+        
+        
+    }
+    
+    private func configure() {
+        guard let viewmodel = viewmodel else {return}
+        
+        infoTextField.isHidden = viewmodel.shouldHideTextField
+        bioTextView.isHidden = viewmodel.shouldHideTextView
+        
+        titleLabel.text = viewmodel.titleText
+        
+        infoTextField.text = viewmodel.optionLabel
+        
+        bioTextView.placegholderLabel.isHidden = viewmodel.shouldHidePlaceholderlabel
+        bioTextView.text = viewmodel.optionLabel
         
         
     }
