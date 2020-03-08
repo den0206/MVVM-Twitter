@@ -130,7 +130,10 @@ class TweetService {
                     let dictionary = document.data()
                     let tweetId = dictionary[kTWEETID] as! String
                     
-                    TweetService.shared.fetxhSingleTweet(withTweetId: tweetId) { (tweet) in
+                    TweetService.shared.fetxhSingleTweet(withTweetId: tweetId) { (likedTweet) in
+                        var tweet = likedTweet
+                        tweet.didLike = true
+                        
                         likesTweets.append(tweet)
                         completion(likesTweets)
                     }
@@ -188,27 +191,7 @@ class TweetService {
         }
     }
     
-//    func fetchTweetFromUserId(uid : String, completion : @escaping([Tweet]) -> Void) {
-//        var tweets = [Tweet]()
-//
-//        firebaseReferences(.Tweet).whereField(kUSERID, isEqualTo: uid ).getDocuments { (snapshot, error) in
-//
-//            guard let snapshot = snapshot else {return}
-//
-//            if !snapshot.isEmpty {
-//                for document in snapshot.documents {
-//                    let dictionary = document.data()
-//                    let tweet = Tweet(user: user, tweetId: document.documentID, dictionary: dictionary)
-//
-//                    tweets.append(tweet)
-//
-//                }
-//
-//                completion(tweets)
-//            }
-//        }
-//
-//    }
+
     
     func fetchReply(tweetId : String, completion : @escaping([Tweet]) -> Void) {
         

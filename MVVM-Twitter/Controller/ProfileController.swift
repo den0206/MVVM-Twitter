@@ -180,7 +180,11 @@ extension ProfileController : ProfileHeaderDelegate {
     
     func handleEditProfileFollow(_ header: ProfileHeader) {
         if user.isCurrentUser {
-            print("Edit")
+            let editVC = EditProfileController(user: user)
+            
+            let nav = UINavigationController(rootViewController: editVC)
+            nav.modalPresentationStyle = .fullScreen
+            present(nav, animated: true, completion: nil)
             return
         }
         

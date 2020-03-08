@@ -85,7 +85,12 @@ class FeedController : UICollectionViewController {
         guard let currentUid = Auth.auth().currentUser?.uid else {return}
         
         collectionView.refreshControl?.beginRefreshing()
+        
+        // when Login
+        if followingListner == nil {  collectionView.refreshControl?.endRefreshing()}
+        
         // get followingIds
+        var feedTweets = [Tweet]()
         
         followingListner =  UserService.shared.fetchFollowingIDs(uid: currentUid) { (followingIDs) in
             self.followingIDs = followingIDs
@@ -93,7 +98,8 @@ class FeedController : UICollectionViewController {
             for uid in self.followingIDs {
                 UserService.shared.fetchUser(uid: uid) { (user) in
                     TweetService.shared.fetchTweetsForUser(user: user) { (tweets) in
-                        self.tweets = tweets.sorted(by: { $0.timestamp >  $1.timestamp })
+                        feedTweets += tweets
+                        self.tweets = feedTweets.sorted(by: { $0.timestamp >  $1.timestamp })
                         self.checkifUserLikedTweet()
                         
                         self.collectionView.refreshControl?.endRefreshing()
@@ -101,6 +107,8 @@ class FeedController : UICollectionViewController {
                 }
             }
         }
+        
+       
     }
     
     func fetchTweets() {
@@ -109,9 +117,7 @@ class FeedController : UICollectionViewController {
             self.tweets = tweets.sorted(by: { $0.timestamp >  $1.timestamp })
             self.checkifUserLikedTweet()
             
-            for i in tweets {
-                print(i.didLike)
-            }
+          
 //            self.collectionView.reloadData()
         }
     }
