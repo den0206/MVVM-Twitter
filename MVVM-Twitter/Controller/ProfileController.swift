@@ -6,8 +6,8 @@
 //  Copyright © 2020 Yuuki sakai. All rights reserved.
 //
 
-import Foundation
 import UIKit
+import FirebaseAuth
 
 private let reuserIdentifier = "tweetCell"
 private let headerIdentifier = "profileHeader"
@@ -181,7 +181,7 @@ extension ProfileController : ProfileHeaderDelegate {
     func handleEditProfileFollow(_ header: ProfileHeader) {
         if user.isCurrentUser {
             let editVC = EditProfileController(user: user)
-            
+            editVC.delegate = self
             let nav = UINavigationController(rootViewController: editVC)
             nav.modalPresentationStyle = .fullScreen
             present(nav, animated: true, completion: nil)
@@ -214,7 +214,20 @@ extension ProfileController : ProfileHeaderDelegate {
      func handleFollowerLabelTapped() {
          print("Follower")
      }
-     
+    
+}
+
+extension ProfileController : EditProfileFooterDelegate {
+    func handleLogout() {
+        do {
+            try Auth.auth().signOut()
+            let nav = UINavigationController(rootViewController: LoginVC())
+            nav.modalPresentationStyle = .fullScreen
+            self.present(nav, animated: true, completion: nil)
+        } catch let error {
+            print("DEBUG: Failed to sign out with error \(error.localizedDescription)")
+        }
+    }
     
     
 }
