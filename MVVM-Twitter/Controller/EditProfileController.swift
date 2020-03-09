@@ -94,24 +94,52 @@ class EditProfileController : UITableViewController {
     
     @objc func handleSave() {
         
+        view.endEditing(true)
+        
+        guard userinfoCganged || imageChanged else {return}
+        self.shouldPresentLoadingView(true)
+        
+        updateUserdata()
+        
+       
+    }
+    
+    private func updateUserdata() {
+        
         // only Image
         
         if imageChanged && !userinfoCganged {
-            print("Image")
+            updateProfileImage()
         }
         
         // only userinfo
         if userinfoCganged && !imageChanged {
             UserService.shared.saveUserData(user: user) { (error) in
                 // reload profileVC
+                self.shouldPresentLoadingView(false)
                 self.delegate?.reload(self, user: self.user)
             }
         }
         
         // both
         if userinfoCganged && imageChanged {
-            print("Both")
+            UserService.shared.saveUserData(user: user) { (error) in
+                self.updateProfileImage()
+            }
         }
+    }
+    
+    func updateProfileImage() {
+        guard let image = selectedImage else {return}
+        
+        guard let deleteImageLink = user.profileImageUrl else {return}
+        
+        UserService.shared.updarteProfileImage(image: image, deleteLink: deleteImageLink) { (profileImageLink) in
+            self.user.profileImageUrl = profileImageLink
+            self.shouldPresentLoadingView(false)
+            self.delegate?.reload(self, user: self.user)
+        }
+        
     }
     
     @objc func handleCancel() {

@@ -121,6 +121,48 @@ class UserService {
         firebaseReferences(.User).document(currentUid).updateData(values, completion: completion)
     }
     
+    func updarteProfileImage(image : UIImage, deleteLink : URL?, completion : @escaping(URL?) -> Void) {
+        
+        guard let imageData = image.jpegData(compressionQuality: 0.3) else {return}
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        
+        let fileName = NSUUID().uuidString
+        let storogeRef = kSTOROGE_PROFILE_REF.child(fileName)
+        
+        // delete old Image
+        if let deleteLink = deleteLink?.absoluteString {
+            print(deleteLink)
+            deleteImage(deleteLink: deleteLink)
+        }
+        
+        storogeRef.putData(imageData, metadata: nil) { (meta, error) in
+            storogeRef.downloadURL { (url, error) in
+                guard let profileImageURL = url?.absoluteString else {return}
+
+                let value = [kPROFILE_IMAGE : profileImageURL]
+
+                firebaseReferences(.User).document(uid).updateData(value) { (_) in
+                    completion(url)
+                }
+            }
+        }
+        
+        
+    }
+    
+    func deleteImage(deleteLink : String) {
+        
+        
+        Storage.storage().reference(forURL: deleteLink).delete { (error) in
+            if error != nil {
+                print("削除できませんでした。")
+            }
+            
+            print("削除しました")
+        }
+        
+    }
+    
    
 
     
