@@ -79,6 +79,9 @@ class FeedController : UICollectionViewController {
         profileImageView.sd_setImage(with: user.profileImageUrl, completed: nil)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileImageView)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(habdleTappedImage))
+        profileImageView.addGestureRecognizer(tap)
     }
     
     func fetchFollowingIDs() {
@@ -136,6 +139,13 @@ class FeedController : UICollectionViewController {
     
     @objc func handleRefresh() {
         fetchFollowingIDs()
+    }
+    
+    @objc func habdleTappedImage() {
+        guard let user = user else {return}
+        
+        let profileVC = ProfileController(user: user)
+        navigationController?.pushViewController(profileVC, animated: true)
     }
     
 }

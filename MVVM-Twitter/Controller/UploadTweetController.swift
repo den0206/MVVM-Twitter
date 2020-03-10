@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ActiveLabel
 
 
 class UploadTweetController : UIViewController {
@@ -33,12 +34,12 @@ class UploadTweetController : UIViewController {
         return button
     }()
     
-    private lazy var replyLabel : UILabel = {
-        let label = UILabel()
+    private lazy var replyLabel: ActiveLabel = {
+        let label = ActiveLabel()
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = .darkGray
+        label.textColor = .lightGray
+        label.mentionColor = .twitterBlue
         label.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        
         return label
     }()
     
@@ -73,6 +74,7 @@ class UploadTweetController : UIViewController {
         super.viewDidLoad()
         
         configureUI()
+        handleMentionTapped()
     }
     
     //MARK: - Actions
@@ -122,25 +124,29 @@ class UploadTweetController : UIViewController {
         configureNavigationBar()
         
         
-        let imageCaptionStack = UIStackView(arrangedSubviews: [profileImage, captionTextView])
-        imageCaptionStack.axis = .horizontal
-        imageCaptionStack.spacing = 12
-        imageCaptionStack.alignment = .leading
-        
-        view.addSubview(imageCaptionStack)
-        imageCaptionStack.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,right: view.rightAnchor, paddingTop: 16,paddingLeft: 16,paddingRight: 16)
-        
-        // set profile Image
-        profileImage.sd_setImage(with: user.profileImageUrl, completed: nil)
-        
-        // use viewModel
-        
-        actionButton.setTitle(viewModel.actionButtonTitle, for: .normal)
-        captionTextView.placegholderLabel.text = viewModel.placeholderText
-        
-        replyLabel.isHidden = !viewModel.sholdShowReplylabel
-        guard let replyText = viewModel.replyText else {return}
-        replyLabel.text = replyText
+     
+          let imageCaptionStack = UIStackView(arrangedSubviews: [profileImage, captionTextView])
+          imageCaptionStack.axis = .horizontal
+          imageCaptionStack.spacing = 12
+          imageCaptionStack.alignment = .leading
+          
+          let stack = UIStackView(arrangedSubviews: [replyLabel, imageCaptionStack])
+          stack.axis = .vertical
+          stack.spacing = 12
+          
+          view.addSubview(stack)
+          stack.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                       right: view.rightAnchor, paddingTop: 16, paddingLeft: 16,
+                       paddingRight: 16)
+          
+          profileImage.sd_setImage(with: user.profileImageUrl, completed: nil)
+          
+          actionButton.setTitle(viewModel.actionButtonTitle, for: .normal)
+          captionTextView.placegholderLabel.text = viewModel.placeholderText
+          
+          replyLabel.isHidden = !viewModel.sholdShowReplylabel
+          guard let replyText = viewModel.replyText else { return }
+          replyLabel.text = replyText
         
         
     }
@@ -153,4 +159,9 @@ class UploadTweetController : UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: actionButton)
     }
     
+    func handleMentionTapped() {
+        replyLabel.handleMentionTap { (mention) in
+            print(mention)
+        }
+    }
 }
